@@ -4,7 +4,8 @@ import SearchResultsReducer from './SearchResultsReducer';
 import QuotesReducer from './QuotesReducer';
 
 const rootReducer = combineReducers({
-  searchResults: SearchResultsReducer
+  searchResults: SearchResultsReducer,
+  quotes: QuotesReducer
 });
 
 export default rootReducer;
