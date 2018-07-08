@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import SearchResultItem from '../SearchResultItem/SearchResultItem';
+
+import { setDisplayLoader } from '../../actions/index';
 
 class SearchResultList extends Component {
   renderList() {
@@ -10,17 +13,28 @@ class SearchResultList extends Component {
     );
     return SearchResultItems;
   }
+  componentDidUpdate() {
+    if (this.props.filteredSearchResults.length > 0) {
+      this.props.setDisplayLoader(false);
+    }
+  }
   render() {
-    return (
-      <ul>
-        {this.props.filteredSearchResults.length > 0 ? this.renderList() : '...Loading'}
-      </ul>
-    );
+    if (this.props.filteredSearchResults.length > 0) {
+      return <ul>{this.renderList()}</ul>;
+    }
+    if (this.props.displayLoader) {
+      return <ul>Loading...</ul>;
+    }
+    return <ul></ul>;
   }
 }
 
-function mapStateToProps({filteredSearchResults}) {
-  return {filteredSearchResults};
+function mapStateToProps({filteredSearchResults, displayLoader}) {
+  return {filteredSearchResults, displayLoader};
 }
 
-export default connect(mapStateToProps)(SearchResultList);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({setDisplayLoader}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResultList);
