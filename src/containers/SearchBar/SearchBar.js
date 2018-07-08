@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { fetchSearchResults } from '../../actions/index';
+import { filterSearchResults } from '../../actions/index';
+import { clearSearchResults } from '../../actions/index';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -11,20 +13,38 @@ class SearchBar extends Component {
     this.state = {query: ''};
 
     this.handleOnInputChange = this.handleOnInputChange.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
   handleOnInputChange(event) {
     this.setState({query: event.target.value});
     this.props.fetchSearchResults(event.target.value);
+    if (this.props.filteredSearchResults) {
+      this.props.clearSearchResults();
+    }
+  }
+  handleOnSubmit(event) {
+    event.preventDefault();
+    this.setState({query: ''});
+    if (this.state.query) {
+      this.props.filterSearchResults(this.props.searchResults);
+    }
   }
   render() {
     return (
-      <input value={this.state.query} onChange={this.handleOnInputChange} />
+      <form onSubmit={this.handleOnSubmit}>
+        <input value={this.state.query} onChange={this.handleOnInputChange} />
+        <button type="submit">Search</button>
+      </form>
     );
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchSearchResults}, dispatch);
+  return bindActionCreators({fetchSearchResults, filterSearchResults, clearSearchResults}, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+function mapStateToProps({searchResults, filteredSearchResults}) {
+  return {searchResults, filteredSearchResults};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
