@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 
-import SearchBar from '../../containers/SearchBar/SearchBar'
-import SearchResultList from '../../containers/SearchResultList/SearchResultList'
+import SidePanel from '../SidePanel/SidePanel'
 import QuoteBoard from '../../containers/QuoteBoard/QuoteBoard'
 
 class App extends Component {
   render() {
     return (
-      <div className="app">
-        <div>
-          <SearchBar />
-          <SearchResultList />
+      <div className="app container-fluid">
+        <div className="row">
+          <SidePanel />
+          <QuoteBoard />
         </div>
-        <QuoteBoard />
       </div>
     );
   }
