@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import SearchBar from '../../containers/SearchBar/SearchBar'
 import SearchResultList from '../../containers/SearchResultList/SearchResultList'
+import QuoteBoard from '../../containers/QuoteBoard/QuoteBoard'
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
           <SearchBar />
           <SearchResultList />
         </div>
+        <QuoteBoard />
       </div>
     );
   }
