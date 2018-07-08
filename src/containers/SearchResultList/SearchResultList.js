@@ -5,22 +5,22 @@ import SearchResultItem from '../SearchResultItem/SearchResultItem';
 
 class SearchResultList extends Component {
   renderList() {
-    const displayedResults = this.props.searchResults.map(
-      searchResult => <SearchResultItem key={searchResult} term={searchResult} />
-    ).slice(0, 5);
-    return displayedResults;
+    const SearchResultItems = this.props.filteredSearchResults.map(
+      result => <SearchResultItem key={result} term={result} />
+    );
+    return SearchResultItems;
   }
   render() {
     return (
       <ul>
-        {Array.isArray(this.props.searchResults) ? this.renderList() : ''}
+        {this.props.filteredSearchResults.length > 0 ? this.renderList() : '...Loading'}
       </ul>
     );
   }
 }
 
-function mapStateToProps({searchResults}) {
-  return {searchResults};
+function mapStateToProps({filteredSearchResults}) {
+  return {filteredSearchResults};
 }
 
 export default connect(mapStateToProps)(SearchResultList);
