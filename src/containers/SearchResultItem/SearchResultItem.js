@@ -16,11 +16,19 @@ class SearchResultItem extends Component {
     this.props.clearSearchResults();
   }
   render() {
-    return (
-      <li onClick={this.handleItemClick}>
-        {this.props.term}
-      </li>
-    );
+    if (this.props.term === 'No Results Found') { 
+      return (
+        <li>
+          {this.props.term}
+        </li>
+      );
+    } else {
+      return (
+        <li onClick={this.handleItemClick}>
+          {this.props.term}
+        </li>
+      );
+    }
   }
 };
 

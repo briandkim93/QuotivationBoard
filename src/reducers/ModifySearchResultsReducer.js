@@ -11,11 +11,14 @@ function ModifySearchResultsReducer(state = [], action) {
         }
       );
       const filteredTitles = filteredSearchResults.map(result => result.data.query.pages[0].title);
-      return filteredTitles;
+      if (filteredTitles.length > 0) { 
+        return filteredTitles;
+      } else {
+        return ['No Results Found'];
+      }
       break;
     case CLEAR_SEARCH_RESULTS:
       return [];
-      break;
   }
   return state;
 }
