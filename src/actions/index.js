@@ -3,6 +3,7 @@ import axios from 'axios';
 export const FETCH_SEARCH_RESULTS = 'FETCH_SEARCH_RESULTS';
 export const FILTER_SEARCH_RESULTS = 'FILTER_SEARCH_RESULTS';
 export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
+export const DISPLAY_LOADER = 'DISPLAY_LOADER';
 export const FETCH_QUOTES = 'FETCH_QUOTES';
 
 const baseURL = 'https://en.wikiquote.org/w/api.php?';
@@ -29,6 +30,13 @@ export function filterSearchResults(terms) {
 export function clearSearchResults() {
   return {
     type: CLEAR_SEARCH_RESULTS
+  };
+}
+
+export function setDisplayLoader(phase) {
+  return {
+    type: DISPLAY_LOADER,
+    payload: phase
   };
 }
 
