@@ -20,8 +20,8 @@ class QuoteBoard extends Component {
   updateList(quoteObjectList) {
     const date = new Date();
     for (let i = 0; i < quoteObjectList.length; i += 1) {
-      if (quoteObjectList[i].dateSet !== date.toLocaleDateString()) {
-        quoteObjectList[i].current < quoteObjectList[i].total ? quoteObjectList[i].current += 1 : quoteObjectList[i].current = 0;
+      if (quoteObjectList[i].dateSet === date.toLocaleDateString()) {
+        quoteObjectList[i].current < quoteObjectList[i].total - 1 ? quoteObjectList[i].current += 1 : quoteObjectList[i].current = 0;
         quoteObjectList[i].dateSet = date.toLocaleDateString()
       }
     }
