@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import './SearchResultList.css';
+
 import SearchResultItem from '../SearchResultItem/SearchResultItem';
 
 import { setDisplayLoader } from '../../actions/index';
@@ -23,7 +25,7 @@ class SearchResultList extends Component {
       return <ul>{this.renderList()}</ul>;
     }
     if (this.props.displayLoader) {
-      return <ul>Loading...</ul>;
+      return <div class="loader"></div>;
     }
     return <ul></ul>;
   }
