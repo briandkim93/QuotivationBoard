@@ -1,4 +1,5 @@
 import { FETCH_QUOTES } from '../actions/index';
+import { REFRESH_QUOTE } from '../actions/index';
 
 import WikiquotesContentParser from '../parsers/WikiquotesContentParser';
 
@@ -19,6 +20,16 @@ function QuotesReducer(state = [], action) {
       if (!existingTitles.includes(title)) {
         return [...state, {title, quoteList, dateSet, current: 0, total: quoteList.length}];
       }
+      break;
+    case REFRESH_QUOTE:
+      const refreshedState = state.map(quoteObject => {
+        if (quoteObject.title === action.payload.title) {
+          return action.payload;
+        } else {
+          return quoteObject;
+        }
+      });
+      return refreshedState;
     default:
       return state;
   }
