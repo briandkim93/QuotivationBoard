@@ -11,14 +11,16 @@ function QuotesReducer(state = [], action) {
       const quotesContent = pages.revisions[0].content;
 
       const quotesParser = new WikiquotesContentParser(quotesContent);
-      const quoteList = quotesParser.parse();
+      let quoteList = quotesParser.parse();
+      quoteList = quoteList.filter(quote => quote.length <= 500);
 
       const date = new Date();
       const dateSet = date.toLocaleDateString();
       const existingTitles = state.map(quotesObject => quotesObject.title);
 
       if (!existingTitles.includes(title)) {
-        return [...state, {title, quoteList, dateSet, current: 0, total: quoteList.length}];
+        const randomIndex = Math.floor(Math.random() * quoteList.length);
+        return [...state, {title, quoteList, dateSet, current: randomIndex, total: quoteList.length}];
       }
       break;
     case REFRESH_QUOTE:
