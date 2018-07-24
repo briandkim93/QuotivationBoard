@@ -6,8 +6,6 @@ import './SearchResultList.css';
 
 import SearchResultItem from '../SearchResultItem/SearchResultItem';
 
-import { setDisplayLoader } from '../../actions/index';
-
 class SearchResultList extends Component {
   renderList() {
     const SearchResultItems = this.props.filteredSearchResults.map(
@@ -15,28 +13,16 @@ class SearchResultList extends Component {
     );
     return SearchResultItems;
   }
-  componentDidUpdate() {
-    if (this.props.filteredSearchResults.length > 0) {
-      this.props.setDisplayLoader(false);
-    }
-  }
   render() {
     if (this.props.filteredSearchResults.length > 0) {
       return <ul className="search-result-list">{this.renderList()}</ul>;
-    }
-    if (this.props.displayLoader) {
-      return <div className="loader"></div>;
     }
     return <ul className="search-result-list"></ul>;
   }
 }
 
-function mapStateToProps({filteredSearchResults, displayLoader}) {
-  return {filteredSearchResults, displayLoader};
+function mapStateToProps({filteredSearchResults}) {
+  return {filteredSearchResults};
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({setDisplayLoader}, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchResultList);
+export default connect(mapStateToProps)(SearchResultList);

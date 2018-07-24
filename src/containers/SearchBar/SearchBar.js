@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { fetchSearchResults } from '../../actions/index';
 import { filterSearchResults } from '../../actions/index';
 import { clearSearchResults } from '../../actions/index';
-import { setDisplayLoader } from '../../actions/index';
 
 import './SearchBar.css';
 import searchButton from './images/search-button.png';
@@ -31,7 +30,6 @@ class SearchBar extends Component {
     this.setState({query: ''});
     if (this.state.query) {
       this.props.filterSearchResults(this.props.searchResults);
-      this.props.setDisplayLoader(true);
     }
   }
   render() {
@@ -56,7 +54,7 @@ function mapStateToProps({searchResults, filteredSearchResults}) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchSearchResults, filterSearchResults, clearSearchResults, setDisplayLoader}, dispatch);
+  return bindActionCreators({fetchSearchResults, filterSearchResults, clearSearchResults}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
