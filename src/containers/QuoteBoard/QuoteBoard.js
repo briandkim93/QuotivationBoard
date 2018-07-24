@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
+import './QuoteBoard.css';
+
 import QuoteBoardItem from '../QuoteBoardItem/QuoteBoardItem';
 
 import {fetchQuotes} from '../../actions/index';
@@ -20,7 +22,7 @@ class QuoteBoard extends Component {
   updateList(quoteObjectList) {
     const date = new Date();
     for (let i = 0; i < quoteObjectList.length; i += 1) {
-      if (quoteObjectList[i].dateSet === date.toLocaleDateString()) {
+      if (quoteObjectList[i].dateSet !== date.toLocaleDateString()) {
         quoteObjectList[i].current < quoteObjectList[i].total - 1 ? quoteObjectList[i].current += 1 : quoteObjectList[i].current = 0;
         quoteObjectList[i].dateSet = date.toLocaleDateString()
       }
@@ -30,8 +32,10 @@ class QuoteBoard extends Component {
   render() {
     this.updateList(this.props.quotes);
     return (
-      <div className="quote-board col-8">
-        {this.props.quotes.length > 0 ? this.renderList() : ''}
+      <div className="quote-board">
+        <ul className="quote-board-list">
+          {this.props.quotes.length > 0 ? this.renderList() : ''}
+        </ul>
       </div>
     );
   }
