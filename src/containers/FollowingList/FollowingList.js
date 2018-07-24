@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import FollowingListItem from '../FollowingListItem/FollowingListItem';
+
+import './FollowingList.css';
+
 class FollowingList extends Component {
   renderList() {
-    return this.props.quotes.map(quotes => <li key={quotes.title}>{quotes.title}</li>)
+    return this.props.quotes.map(quotes => <FollowingListItem key={quotes.title} title={quotes.title} />)
   }
   render() {
+    if (this.props.quotes.length < 1) {
+      return (
+        <ul className="following-list">
+          <li className="following-list-title">Following</li>
+          <li className="following-list-warning">No Sources Added</li>
+        </ul>
+      );
+    }
     return (
-      <ul>
+      <ul className="following-list">
+        <li className="following-list-title">Following</li>
         {this.renderList()}
       </ul>
     );
