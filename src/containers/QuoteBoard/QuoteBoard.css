@@ -1,0 +1,56 @@
+/*Extra small devices (portrait phones, less than 576px)*/
+.quote-board-item {
+  margin: 5% auto;
+  width: 100%;
+  max-width: 1200px;
+  font-size: 1.0rem;
+  border: 1px solid #000000;
+  padding: 5%;
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+.quote-board {
+  overflow: hidden;
+
+  order: 2;
+  -webkit-order: 2;
+  margin: 0 auto;
+}
+.quote-board-list {
+  width: 80%;
+  margin: 0 auto;
+}
+.quote-source-row {
+  margin-top: 5%;
+}
+.quote-source {
+  float: right;
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+  .quote-board-item {
+    font-size: 1.3rem;
+  }
+  .quote-source {
+    font-size: 1.3rem;
+  }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+  .quote-board-item {
+    font-size: 1.6rem;
+  }
+  .quote-source {
+    font-size: 1.4rem;
+  }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+}
