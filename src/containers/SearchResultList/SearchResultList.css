@@ -1,4 +1,6 @@
 .search-result-list {
-  color: #ffffff;
+  color: #000000;
   position: absolute;
+  background-color: #ffffff;
+  width: 100%;
 }

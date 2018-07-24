@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 
 import './SearchResultList.css';
 
-import SearchResultItem from '../SearchResultItem/SearchResultItem';
+import SearchResultListItem from '../SearchResultListItem/SearchResultListItem';
 
 class SearchResultList extends Component {
   renderList() {
-    const SearchResultItems = this.props.filteredSearchResults.map(
-      result => <SearchResultItem key={result} term={result} />
+    const SearchResultListItems = this.props.filteredSearchResults.map(
+      result => <SearchResultListItem key={result} term={result} />
     );
-    return SearchResultItems;
+    return SearchResultListItems;
   }
   render() {
     if (this.props.filteredSearchResults.length > 0) {

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { fetchQuotes } from '../../actions/index';
 import { clearSearchResults } from '../../actions/index';
 
-class SearchResultItem extends Component {
+class SearchResultListItem extends Component {
   constructor(props) {
     super(props);
     
@@ -32,4 +32,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({fetchQuotes, clearSearchResults}, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(SearchResultItem);
+export default connect(null, mapDispatchToProps)(SearchResultListItem);
