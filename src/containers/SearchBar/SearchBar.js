@@ -7,6 +7,9 @@ import { filterSearchResults } from '../../actions/index';
 import { clearSearchResults } from '../../actions/index';
 import { setDisplayLoader } from '../../actions/index';
 
+import './SearchBar.css';
+import searchButton from './images/search-button.png';
+
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -33,20 +36,27 @@ class SearchBar extends Component {
   }
   render() {
     return (
-      <form onSubmit={this.handleOnSubmit}>
-        <input value={this.state.query} onChange={this.handleOnInputChange} />
-        <button type="submit">Search</button>
+      <form className="search-bar" onSubmit={this.handleOnSubmit}>
+        <input 
+          className="search-input" 
+          placeholder="Search" 
+          value={this.state.query} 
+          onChange={this.handleOnInputChange} 
+        />
+        <button className="search-button" type="submit">
+          <img src={searchButton} alt="Search Button" />
+        </button>
       </form>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchSearchResults, filterSearchResults, clearSearchResults, setDisplayLoader}, dispatch);
-}
-
 function mapStateToProps({searchResults, filteredSearchResults}) {
   return {searchResults, filteredSearchResults};
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({fetchSearchResults, filterSearchResults, clearSearchResults, setDisplayLoader}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
