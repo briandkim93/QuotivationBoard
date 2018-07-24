@@ -17,11 +17,7 @@ class SearchResultItem extends Component {
   }
   render() {
     if (this.props.term === 'No Results Found') { 
-      return (
-        <li>
-          {this.props.term}
-        </li>
-      );
+      return <li>{this.props.term}</li>;
     } else {
       return (
         <li onClick={this.handleItemClick}>
