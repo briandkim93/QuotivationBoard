@@ -22,12 +22,12 @@ class SearchResultList extends Component {
   }
   render() {
     if (this.props.filteredSearchResults.length > 0) {
-      return <ul>{this.renderList()}</ul>;
+      return <ul className="search-result-list">{this.renderList()}</ul>;
     }
     if (this.props.displayLoader) {
-      return <div class="loader"></div>;
+      return <div className="loader"></div>;
     }
-    return <ul></ul>;
+    return <ul className="search-result-list"></ul>;
   }
 }
 
