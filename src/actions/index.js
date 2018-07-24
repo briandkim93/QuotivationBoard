@@ -4,6 +4,7 @@ export const FETCH_SEARCH_RESULTS = 'FETCH_SEARCH_RESULTS';
 export const FILTER_SEARCH_RESULTS = 'FILTER_SEARCH_RESULTS';
 export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
 export const SET_DISPLAY_LOADER = 'SET_DISPLAY_LOADER';
+export const TOGGLE_SIDE_PANEL = 'TOGGLE_SIDE_PANEL';
 export const FETCH_QUOTES = 'FETCH_QUOTES';
 export const REFRESH_QUOTE = 'REFRESH_QUOTE';
 
@@ -38,6 +39,12 @@ export function setDisplayLoader(phase) {
   return {
     type: SET_DISPLAY_LOADER,
     payload: phase
+  };
+}
+
+export function toggleSidePanel() {
+  return {
+    type: TOGGLE_SIDE_PANEL
   };
 }
 
