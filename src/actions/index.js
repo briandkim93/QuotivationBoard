@@ -6,8 +6,15 @@ export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
 export const TOGGLE_SIDE_PANEL = 'TOGGLE_SIDE_PANEL';
 export const FETCH_QUOTES = 'FETCH_QUOTES';
 export const REFRESH_QUOTE = 'REFRESH_QUOTE';
+export const REMOVE_SOURCE = 'REMOVE_SOURCE';
 
 const baseURL = 'https://en.wikiquote.org/w/api.php?';
+
+export function toggleSidePanel() {
+  return {
+    type: TOGGLE_SIDE_PANEL
+  };
+}
 
 export function fetchSearchResults(query) {
   const options = `action=opensearch&redirects=resolve&limit=10&search=${query}`;
@@ -34,12 +41,6 @@ export function clearSearchResults() {
   };
 }
 
-export function toggleSidePanel() {
-  return {
-    type: TOGGLE_SIDE_PANEL
-  };
-}
-
 export function fetchQuotes(term) {
   const parsedTerm = term.replace(' ', '%20');
   const options = `action=query&prop=revisions&rvprop=content&format=json&formatversion=2&titles=${parsedTerm}`;
@@ -56,5 +57,12 @@ export function refreshQuote(quoteObject) {
   return {
     type: REFRESH_QUOTE,
     payload: refreshedQuoteObject
-  }
+  };
+}
+
+export function removeSource(source) {
+  return {
+    type: REMOVE_SOURCE,
+    payload: source
+  };
 }
