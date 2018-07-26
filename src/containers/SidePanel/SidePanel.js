@@ -21,12 +21,12 @@ class SidePanel extends Component {
         <SearchBar />
         <SearchResultList />
         <FollowingList />
-        <button 
-          className="slider" 
+        <div 
+          className={`slider ${this.props.sidePanelStatus === 'active' ? 'active' : 'hidden'}`}
           onClick={() => this.props.toggleSidePanel()}
         >
           {this.props.sidePanelStatus === 'active' ? <img src={rightPointer} /> : <img src={leftPointer} /> }
-        </button>
+        </div>
       </div>
     );
   }
