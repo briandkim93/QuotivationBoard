@@ -10,6 +10,11 @@ const Heading = props => {
       <span className="title">
         <h1>QuoteBoard</h1>
       </span>
+      <div className="menu-button">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   );
 };
