@@ -11,7 +11,6 @@ function ModifySearchResultsReducer(state = [], action) {
           const quotesContent = result.data.query.pages[0].revisions[0].content;
           const quotesParser = new WikiquotesContentParser(quotesContent);
           let quoteList = quotesParser.parse();
-          quoteList = quoteList.filter(quote => quote.length <= 500);
           return (quoteList.length > 0);
         }
       );
