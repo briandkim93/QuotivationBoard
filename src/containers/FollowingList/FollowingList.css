@@ -3,7 +3,6 @@
   border-right: 1px solid #000000;
   background-color: #222222;
   padding: 20px 0;
-  margin: 0 auto;
 }
 
 li {
@@ -25,14 +24,26 @@ li {
 }
 
 .following-list-item {
+  position: relative;
   border-bottom: 1px solid #777777;
   line-height: 2.5rem;
   color: #888888;
   padding: 2%;
 }
 
+.following-title {
+  display: inline-block;
+  width: 92%;
+}
+
 .close-button {
-  float: right;
+  display: inline-block;
+  position: absolute;
+  height: 20px;
+  line-height: 20px;
+  margin-top: -10px;
+  top: 50%;
+  right: 2%;
 }
 
 .close-button:hover {
