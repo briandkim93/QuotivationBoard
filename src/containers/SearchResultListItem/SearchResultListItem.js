@@ -17,11 +17,12 @@ class SearchResultListItem extends Component {
   }
   render() {
     if (this.props.term === 'No Results Found') { 
-      return <li>{this.props.term}</li>;
+      return <li className="search-result-list-item">{this.props.term}</li>;
     } else {
       return (
-        <li onClick={this.handleItemClick}>
-          {this.props.term}
+        <li className="search-result-list-item" onClick={this.handleItemClick}>
+          <span className="search-result-title">{this.props.term}</span>
+          <span className="add-button">+</span>
         </li>
       );
     }
