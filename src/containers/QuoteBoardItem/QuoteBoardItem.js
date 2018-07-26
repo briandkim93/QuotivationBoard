@@ -15,12 +15,15 @@ class QuoteBoardItem extends Component {
   }
   render() {
     return (
-      <li className="quote-board-item">
-        {this.props.quoteObject.quoteList[this.props.quoteObject.current]}
-        <p className="quote-source-row">
-          <span className="refresh-button" onClick={this.handleOnClick}>Refresh</span>
-          <span className="quote-source">-{this.props.quoteObject.title}</span>
+      <li className={`quote-board-item background-${this.props.backgroundImageId}`}>
+        <div className="">
+        <p className="quote-text">
+          {this.props.quoteObject.quoteList[this.props.quoteObject.current]}
+          &nbsp;
+          <p className="refresh-button" onClick={this.handleOnClick}>&#10149;</p>
         </p>
+        <span className="quote-source">-{this.props.quoteObject.title}</span>
+        </div>
       </li>
     );
   }
