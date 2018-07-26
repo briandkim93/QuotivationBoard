@@ -11,9 +11,10 @@ import {fetchQuotes} from '../../actions/index';
 class QuoteBoard extends Component {
   renderList() {
     const quotesObjectList = this.props.quotes.map(
-      quoteObject => 
+      (quoteObject, index) => 
         <QuoteBoardItem 
           key={quoteObject.title}
+          backgroundImageId={index % 10}
           quoteObject={quoteObject}
         />
     );
