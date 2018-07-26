@@ -1,5 +1,6 @@
 import { FETCH_QUOTES } from '../actions/index';
 import { REFRESH_QUOTE } from '../actions/index';
+import { REMOVE_SOURCE } from '../actions/index';
 
 import WikiquotesContentParser from '../parsers/WikiquotesContentParser';
 
@@ -12,7 +13,6 @@ function QuotesReducer(state = [], action) {
 
       const quotesParser = new WikiquotesContentParser(quotesContent);
       let quoteList = quotesParser.parse();
-      quoteList = quoteList.filter(quote => quote.length <= 500);
 
       const date = new Date();
       const dateSet = date.toLocaleDateString();
@@ -32,6 +32,9 @@ function QuotesReducer(state = [], action) {
         }
       });
       return refreshedState;
+      break;
+    case REMOVE_SOURCE:
+      return state.filter(quoteObject => !(quoteObject.title === action.payload));
     default:
       return state;
   }
