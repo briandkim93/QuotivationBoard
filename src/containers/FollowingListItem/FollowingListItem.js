@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { removeSource } from '../../actions/index.js';
 
 class FollowingListItem extends Component {
   render() {
     return (
       <li className="following-list-item">
-        {this.props.title}
-        <span className="close-button">x</span>
+        <span className="following-title">{this.props.title}</span>
+        <span className="close-button" onClick={() => this.props.removeSource(this.props.title)}>x</span>
       </li>
     );
   }
 }
 
-export default FollowingListItem;
+function mapDispacthToProps(dispatch) {
+  return bindActionCreators({removeSource}, dispatch);
+}
+
+export default connect(null, mapDispacthToProps)(FollowingListItem);
