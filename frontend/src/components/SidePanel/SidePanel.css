@@ -1,0 +1,81 @@
+/*Extra small devices (portrait phones, less than 576px)*/
+.slider {
+  display: none;
+}
+.side-panel {
+  border-right: 1px solid #000000;
+  background-color: #222222;
+}
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+  .side-panel {
+    width: 220px;
+    position: fixed;
+    z-index: 100;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+  }
+
+  .hidden {
+    margin-left: -220px;
+  }
+  .slider {
+    display: inline-block;
+    font-size: 0.8rem;
+    z-index: 1000;
+
+    position: fixed;
+    top: 50%;
+    left: 219px;
+
+    height: 80px;
+    width: 25px;
+    margin-top: -40px;
+    padding: 0;
+
+    text-align: center;
+    perspective: 50px;
+  }
+  .slider:after {
+    background-color: #484de2;
+    content: '';
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #000000;
+    left: 0;
+    z-index: -1;
+    transform: rotateY(20deg);
+  }
+  .slider img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 6px;
+    height: 12px;
+    margin-top: -6px;
+    margin-left: -6px;
+  }
+  .slider:hover {
+    cursor: pointer;
+  }
+  .slider:focus {
+    outline: none;
+  }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+}

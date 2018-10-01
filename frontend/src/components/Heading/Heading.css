@@ -1,0 +1,68 @@
+/*Extra small devices (portrait phones, less than 576px)*/
+.logo {
+  box-sizing: border-box;
+  margin: 2%;
+  display: inline-block;
+  border: 1px solid #484de2;
+}
+
+.heading {
+  background-color: #f4f4f4;
+  color: #484de2;
+  width: 100%;
+  white-space: nowrap;
+  position: relative;
+}
+
+.title {
+  vertical-align: middle;
+  display: inline-block;
+  width: 70%;
+}
+
+h1 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.menu-button {
+  display: inline-block;
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  margin-top: -13.5px;
+}
+.menu-button:hover {
+  cursor: pointer;
+}
+
+.menu-button div {
+  background-color: #484de2;
+  width: 25px;
+  height: 5px;
+  margin: 3px 0;
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+  .logo {
+    width: 15%;
+    margin: 5%;
+  }
+  .menu-button {
+    display: none;
+  }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+}

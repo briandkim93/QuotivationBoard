@@ -1,0 +1,71 @@
+/*Extra small devices (portrait phones, less than 576px)*/
+.following-list {
+  background-color: #222222;
+  padding: 20px 0;
+}
+
+li {
+  width: 84%;
+  margin: 0 auto;
+}
+
+.following-list-title {
+  border-bottom: 1px solid #cccccc;
+  text-align: center;
+  line-height: 2.0rem;
+  color: #ffffff;
+}
+
+.following-list-warning {
+  text-align: center;
+  line-height: 2.5rem;
+  color: #888888;
+}
+
+.following-list-item {
+  position: relative;
+  border-bottom: 1px solid #777777;
+  line-height: 2.5rem;
+  color: #888888;
+  padding: 2%;
+}
+
+.following-title {
+  display: inline-block;
+  width: 92%;
+}
+
+.close-button {
+  display: inline-block;
+  position: absolute;
+  height: 20px;
+  line-height: 20px;
+  margin-top: -10px;
+  top: 50%;
+  right: 2%;
+}
+
+.close-button:hover {
+  cursor: pointer;
+}
+
+.hidden-menu {
+  display: none;
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+}
