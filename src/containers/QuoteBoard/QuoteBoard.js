@@ -20,7 +20,7 @@ class QuoteBoard extends Component {
     );
     return quotesObjectList;
   }
-  updateList(quoteObjectList) {
+  dailyUpdate(quoteObjectList) {
     const date = new Date();
     for (let i = 0; i < quoteObjectList.length; i += 1) {
       if (quoteObjectList[i].dateSet !== date.toLocaleDateString()) {
@@ -28,17 +28,36 @@ class QuoteBoard extends Component {
         quoteObjectList[i].dateSet = date.toLocaleDateString()
       }
     }
-    return;
   }
   render() {
-    this.updateList(this.props.quotes);
-    return (
-      <div className="quote-board">
-        <ul className="quote-board-list">
-          {this.props.quotes.length > 0 ? this.renderList() : ''}
+    this.dailyUpdate(this.props.quotes);
+    if (this.props.quotes.length === 0) {
+      return (
+        <div className="empty-quote-board">
+          <p>
+            Add A
+            <br/>
+            Source
+            <br/>
+            To Begin
+          </p>
+        </div>
+      );
+    } else if (this.props.quotes.length === 1) {
+      return (
+        <ul className="singular-quote-board">
+          <QuoteBoardItem 
+            quoteObject={this.props.quotes[0]}
+          />
         </ul>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <ul className="quote-board">
+          {this.renderList()}
+        </ul>
+      );
+    }
   }
 }
 
