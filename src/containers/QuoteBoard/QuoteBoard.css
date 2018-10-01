@@ -1,8 +1,45 @@
 /*Extra small devices (portrait phones, less than 576px)*/
+.empty-quote-board {
+  position: relative;
+  height: 100vh;
+  background-image: url('./images/bg-0.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.empty-quote-board p {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+
+  width: 250px;
+  margin-left: -125px;
+
+  font-size: 2.8rem;
+  font-weight: bold;
+  text-align: center;
+  font-family: Verdana, Geneva, sans-serif;
+  color: #ffffff;
+  border: 5px solid #ffffff;
+}
+
+.singular-quote-board {
+  position: relative;
+  height: 100vh;
+  background-image: url('./images/bg-0.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.singular-quote-board li {
+  position: absolute;
+  top: 20%;
+  padding: 10%;
+}
+
 .quote-board-item {
   width: 100%;
   font-size: 1.4rem;
-  background-color: #ffffff;
   color: #ffffff;
 
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
@@ -15,11 +52,6 @@
   justify-content: center;
 }
 .quote-board {
-  overflow: hidden;
-
-  margin: 0 auto;
-}
-.quote-board-list {
   width: 100%;
   margin: 0 auto;
 }

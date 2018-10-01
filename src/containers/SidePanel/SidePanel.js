@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Heading from '../../components/Heading/Heading';
+import Heading from '../Heading/Heading';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResultList from '../SearchResultList/SearchResultList';
 import FollowingList from '../FollowingList/FollowingList';

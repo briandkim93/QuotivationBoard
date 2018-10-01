@@ -12,14 +12,14 @@ class FollowingList extends Component {
   render() {
     if (this.props.quotes.length < 1) {
       return (
-        <ul className="following-list">
+        <ul className={`following-list ${this.props.sidePanelStatus === 'active' ? 'active' : 'hidden-menu'}`}>
           <li className="following-list-title">Following</li>
           <li className="following-list-warning">No Sources Added</li>
         </ul>
       );
     }
     return (
-      <ul className="following-list">
+      <ul className={`following-list ${this.props.sidePanelStatus === 'active' ? 'active' : 'hidden-menu'}`}>
         <li className="following-list-title">Following</li>
         {this.renderList()}
       </ul>
@@ -27,8 +27,8 @@ class FollowingList extends Component {
   }
 }
 
-function mapStateToProps({quotes}) {
-  return {quotes};
+function mapStateToProps({quotes, sidePanelStatus}) {
+  return {quotes, sidePanelStatus};
 }
 
 export default connect(mapStateToProps)(FollowingList);

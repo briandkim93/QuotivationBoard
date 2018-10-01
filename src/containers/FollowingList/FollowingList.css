@@ -1,6 +1,5 @@
 /*Extra small devices (portrait phones, less than 576px)*/
 .following-list {
-  border-right: 1px solid #000000;
   background-color: #222222;
   padding: 20px 0;
 }
@@ -48,6 +47,10 @@ li {
 
 .close-button:hover {
   cursor: pointer;
+}
+
+.hidden-menu {
+  display: none;
 }
 
 /*Small devices (landscape phones, 576px and up)*/

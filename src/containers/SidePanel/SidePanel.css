@@ -2,15 +2,17 @@
 .slider {
   display: none;
 }
+.side-panel {
+  border-right: 1px solid #000000;
+  background-color: #222222;
+}
 /*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
   .side-panel {
-    border-right: 1px solid #000000;
-    background-color: #222222;
     width: 220px;
     position: fixed;
     z-index: 100;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     height: 100vh;
   }
