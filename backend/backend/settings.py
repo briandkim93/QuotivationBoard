@@ -55,8 +55,8 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 
 AUTH_USER_MODEL = 'api.Account'
 
-CORS_ORIGIN_REGEX_WHITELIST = (
-    r'^(https?://)?(\w+\.)?1001movieschecklist\.com$', 
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000'
 )
 
 MIDDLEWARE = [

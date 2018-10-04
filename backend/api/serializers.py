@@ -6,6 +6,7 @@ except ImportError:
 
 import binascii
 from hashlib import sha256
+from random import randint
 from secrets import token_bytes
 
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
@@ -25,7 +26,7 @@ from knox.crypto import hash_token
 from knox.models import AuthToken
 from knox.settings import CONSTANTS, knox_settings
 
-from .models import Account, QuoteSet
+from .models import Account, Author, QuoteSet, AccountToQuoteSet
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,6 +56,7 @@ class AccountSerializer(serializers.ModelSerializer):
             'is_superuser', 
             'is_staff',
             'facebook_id',
+            'provider'
         )
         extra_kwargs = {
             'password': {
@@ -77,9 +79,9 @@ class AccountSerializer(serializers.ModelSerializer):
         account.set_password(validated_data['password'])
         account.provider = 'local'
         account.save()
-        message = render_to_string('email_verification_message.txt', {'email_verification_code': email_verification_code})
+        message = render_to_string('account_creation_message.txt', {'email_verification_code': email_verification_code})
         send_mail(
-            'Welcome to Quotivation Board!',
+            'Welcome to Quotivation Board',
             message,
             'no-reply@quotivationboard.com',
             (validated_data['email'], ),
@@ -90,14 +92,16 @@ class AccountSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         request_data = self.context.get('request').data
         try:
+            if (instance.email == validated_data['email']):
+                raise serializers.ValidationError({'email': ['This is your current email address.']})
             if instance.email != validated_data['email']:
                 instance.email = validated_data['email']
                 instance.email_verified = False
                 email_verification_code = self.create_verification_code(validated_data['email'])
                 instance.email_verification_code = email_verification_code
-                message = render_to_string('email_verification_message.txt', {'email_verification_code': email_verification_code})
+                message = render_to_string('email_change_message.txt', {'email_verification_code': email_verification_code})
                 send_mail(
-                    'Please Verify Your New Email Address',
+                    'Verify Your New Quotivation Board Email Address',
                     message,
                     'no-reply@quotivationboard.com',
                     (validated_data['email'], ),
@@ -114,14 +118,6 @@ class AccountSerializer(serializers.ModelSerializer):
                 instance.active = validated_data['active']
         except KeyError:
             pass;
-        try: 
-            if instance.following_list != validated_data['following_list']:
-                if request_data['following_list_method'] == 'add':
-                    instance.following_list.add(validated_data['following_list'][0])
-                elif request_data['following_list_method'] == 'delete':
-                    instance.following_list.remove(validated_data['following_list'][0])
-        except KeyError:
-            pass;
         instance.save()
         return instance
 
@@ -129,14 +125,62 @@ class AccountSerializer(serializers.ModelSerializer):
         validate_password(password=value)
         return value
 
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Author
+        fields = '__all__'
+
 class QuoteSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuoteSet
         fields = '__all__'
 
-class RefreshTokenSerializer(serializers.Serializer):
-    token = serializers.CharField(max_length=255)
+class AccountToQuoteSetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AccountToQuoteSet
+        fields = '__all__'
+        read_only_fields = (
+            'id',
+            'account', 
+            'current_quote_index', 
+            'last_updated', 
+        )
 
+    def create(self, validated_data):
+        request = self.context.get('request')
+        UTC_offset = request.data['UTCOffset']
+        clent_date = (timezone.now() + timezone.timedelta(hours=UTC_offset)).date()
+        try: 
+            account_to_quoteset = AccountToQuoteSet.objects.get(account=request.user.id, quoteset=validated_data['quoteset'].id)
+            return account_to_quoteset
+        except AccountToQuoteSet.DoesNotExist:
+            quoteset = QuoteSet.objects.get(id=validated_data['quoteset'].id)
+            account_to_quoteset = AccountToQuoteSet(
+                account=request.user,
+                quoteset=quoteset,
+                current_quote_index=randint(0, len(quoteset.quotes) - 1),
+                last_updated=clent_date
+            )
+            account_to_quoteset.save()
+            return account_to_quoteset
+
+    def update(self, instance, validated_data):
+        request = self.context.get('request')
+        UTC_offset = request.data['UTCOffset']
+        client_date = (timezone.now() + timezone.timedelta(hours=UTC_offset)).date()
+        quoteset = QuoteSet.objects.get(id=instance.quoteset.id)
+        account = Account.objects.get(id=instance.account.id)   
+        total_quotes = len(quoteset.quotes)
+        if instance.last_updated < client_date:
+            if instance.current_quote_index < total_quotes - 1:
+                instance.current_quote_index += 1
+            else:
+                instance.current_quote_index = 0
+            instance.last_updated = client_date
+        instance.save()
+        return instance
+
+class RefreshTokenSerializer(serializers.Serializer):
     # Source: django-rest-knox v3.2.x (https://github.com/James1345/django-rest-knox)
     # Replace with built-in AUTO_REFRESH setting upon django-rest-knox v3.2.x release
     def refresh_credentials(self, token):
@@ -163,7 +207,9 @@ class RefreshTokenSerializer(serializers.Serializer):
             auth_token.save(update_fields=('expires',))
 
     def save(self):
-        self.refresh_credentials(self.data['token'])
+        request = self.context['request']
+        token = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
+        self.refresh_credentials(token)
 
 class EmailVerifySerializer(serializers.Serializer):
     def save(self):
@@ -171,7 +217,7 @@ class EmailVerifySerializer(serializers.Serializer):
         account = Account.objects.get(username=request.user)
         message = render_to_string('email_verification_message.txt', {'email_verification_code': account.email_verification_code})
         send_mail(
-            'Verify Your Quotivation Board Account',
+            'Verify Your Quotivation Board Email Address',
             message,
             'no-reply@quotivationboard.com',
             (account.email, ),

@@ -7,8 +7,11 @@ from rest_framework.reverse import reverse
 @permission_classes((AllowAny, ))
 def api_root(request, format=None):
     return Response({
+        'author_list': reverse('api:author_list', request=request, format=format),
         'quoteset_list': reverse('api:quoteset_list', request=request, format=format),
         'account_list': reverse('api:account_list', request=request, format=format),
+        'account_to_quoteset_list': reverse('api:account_to_quoteset_list', request=request, format=format),
+        'account_to_quoteset_create': reverse('api:account_to_quoteset_create', request=request, format=format),
         'email_verify': reverse('api:email_verify', request=request, format=format),
         'email_verify_confirm': reverse('api:email_verify_confirm', request=request, format=format),
         'password_reset': reverse('api:password_reset', request=request, format=format),

@@ -29,10 +29,16 @@ class Account(AbstractUser):
     )
     email_verified = models.BooleanField(default=False)
     email_verification_code = models.CharField(max_length=255)
-    following_list = models.ManyToManyField('QuoteSet', blank=True)
+    following_list = models.ManyToManyField('QuoteSet', through='AccountToQuoteSet')
     active = models.BooleanField(default=True)
     facebook_id = models.CharField(max_length=30, blank=True)
     provider = models.CharField(max_length=30, blank=True)
+
+class Author(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
 
 class QuoteSet(models.Model):
     author = models.CharField(max_length=255)
@@ -41,4 +47,10 @@ class QuoteSet(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return self.author
+
+class AccountToQuoteSet(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    quoteset = models.ForeignKey(QuoteSet, on_delete=models.CASCADE)
+    current_quote_index = models.IntegerField()
+    last_updated = models.DateField()

@@ -6,8 +6,15 @@ from rest_framework_social_oauth2 import views as rest_framework_social_oauth2_v
 from . import views
 
 urlpatterns = [
+    path('api/author/', views.AuthorListView.as_view(), name='author_list'),
+    path('api/author/<int:pk>/', views.AuthorDetailView.as_view(), name='author_detail'),
+
     path('api/quoteset/', views.QuoteSetListView.as_view(), name='quoteset_list'),
     path('api/quoteset/<int:pk>/', views.QuoteSetDetailView.as_view(), name='quoteset_detail'),
+
+    path('api/account_to_quoteset/', views.AccountToQuoteSetListView.as_view(), name='account_to_quoteset_list'),
+    path('api/account_to_quoteset/create/', views.AccountToQuoteSetCreateView.as_view(), name='account_to_quoteset_create'),
+    path('api/account_to_quoteset/<int:pk>/', views.AccountToQuoteSetDetailView.as_view(), name='account_to_quoteset_detail'),
 
     path('api/auth/account/', views.AccountListView.as_view(), name='account_list'),
     path('api/auth/account/<int:pk>/', views.AccountDetailView.as_view(), name='account_detail'),

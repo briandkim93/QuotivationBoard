@@ -9,7 +9,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework import status
 from rest_framework import generics
 from rest_framework.authentication import BasicAuthentication
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -22,28 +22,52 @@ from oauth2_provider.models import AccessToken, RefreshToken
 from rest_framework_social_oauth2.views import ConvertTokenView
 
 from . import serializers
-from .models import Account, QuoteSet
-from .permissions import AccountListPermission, AccountDetailPermission, QuoteSetPermission
+from .models import Account, Author, QuoteSet, AccountToQuoteSet
+from .permissions import IsAdminUserOrCreateOnly, IsCurrentUser, IsAdminUserOrReadOnly
 
 class AccountListView(generics.ListCreateAPIView):
     serializer_class = serializers.AccountSerializer
     queryset = Account.objects.all()
-    permission_classes = (AccountListPermission, )
+    permission_classes = (IsAdminUserOrCreateOnly, )
 
 class AccountDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = serializers.AccountSerializer
     queryset = Account.objects.all()
-    permission_classes = (AccountDetailPermission, )
+    permission_classes = (IsCurrentUser, )
+
+class AuthorListView(generics.ListCreateAPIView):
+    serializer_class = serializers.AuthorSerializer
+    queryset = Author.objects.all()
+    permission_classes = (IsAdminUserOrReadOnly, )
+
+class AuthorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = serializers.AuthorSerializer
+    queryset = Author.objects.all()
+    permission_classes = (IsAdminUserOrReadOnly, )
 
 class QuoteSetListView(generics.ListCreateAPIView):
     serializer_class = serializers.QuoteSetSerializer
     queryset = QuoteSet.objects.all()
-    permission_classes = (QuoteSetPermission, )
+    permission_classes = (IsAdminUser, )
 
 class QuoteSetDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.QuoteSetSerializer
     queryset = QuoteSet.objects.all()
-    permission_classes = (QuoteSetPermission, )
+    permission_classes = (IsAdminUser, )
+
+class AccountToQuoteSetListView(generics.ListAPIView):
+    serializer_class = serializers.AccountToQuoteSetSerializer
+    queryset = AccountToQuoteSet.objects.all()
+    permission_classes = (IsAdminUser, )
+
+class AccountToQuoteSetCreateView(generics.CreateAPIView):
+    serializer_class = serializers.AccountToQuoteSetSerializer
+    queryset = AccountToQuoteSet.objects.all()
+
+class AccountToQuoteSetDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = serializers.AccountToQuoteSetSerializer
+    queryset = AccountToQuoteSet.objects.all()
+    permission_classes = (IsCurrentUser, )
 
 # Source: django-rest-knox v3.1.5 (https://github.com/James1345/django-rest-knox)
 class LoginView(APIView):
