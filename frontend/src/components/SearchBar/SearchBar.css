@@ -25,7 +25,8 @@
 .search-input:focus {
   outline: none;
 }
-.search-button {
+.search-icon-container {
+  display: inline-block;
   box-sizing: border-box;
   width: 30px;
   height: 30px;
@@ -38,15 +39,8 @@
   border-bottom-right-radius: 15px;
   background-color: #efedfc;
 }
-.search-button:hover {
-  cursor: pointer;
 
-  background-color: #cccccc;
-}
-.search-button:focus {
-  outline: none;
-}
-.search-button img {
+.search-icon {
   max-width: 100%;
 
   vertical-align: top;

@@ -48,21 +48,21 @@ class AuthorDetailView(generics.RetrieveUpdateDestroyAPIView):
 class QuoteSetListView(generics.ListCreateAPIView):
     serializer_class = serializers.QuoteSetSerializer
     queryset = QuoteSet.objects.all()
-    permission_classes = (IsAdminUser, )
 
 class QuoteSetDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.QuoteSetSerializer
     queryset = QuoteSet.objects.all()
-    permission_classes = (IsAdminUser, )
 
-class AccountToQuoteSetListView(generics.ListAPIView):
+class AccountToQuoteSetListView(generics.ListCreateAPIView):
+    serializer_class = serializers.AccountToQuoteSetSerializer
+
+    def get_queryset(self):
+        return AccountToQuoteSet.objects.filter(account=self.request.user)
+
+class AccountToQuoteSetFullListView(generics.ListAPIView):
     serializer_class = serializers.AccountToQuoteSetSerializer
     queryset = AccountToQuoteSet.objects.all()
     permission_classes = (IsAdminUser, )
-
-class AccountToQuoteSetCreateView(generics.CreateAPIView):
-    serializer_class = serializers.AccountToQuoteSetSerializer
-    queryset = AccountToQuoteSet.objects.all()
 
 class AccountToQuoteSetDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.AccountToQuoteSetSerializer

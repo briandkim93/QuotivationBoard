@@ -1,34 +1,62 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+
 import ReduxPromise from 'redux-promise';
+
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage'
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
 
-import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './components/App/App';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import reducers from './reducers';
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['searchResults', 'filteredSearchResults', 'displayLoader']
-};
+  stateReconciler: autoMergeLevel2,
+  blacklist: [
+    'displaySignup',
+    'displayLogin',
+    'displayPasswordResetRequest',
+    'signupStatus',
+    'loginStatus',
+    'facebookLoginStatus',
+    'facebookLoginRenderStatus',
+    'refreshTokenStatus',
+    'emailVerifyRequestStatus',
+    'emailVerifyStatus',
+    'passwordResetRequestStatus',
+    'passwordResetStatus',
+    'confirmCredentialsStatus',
+    'passwordChangeStatus',
+    'emailChangeStatus',
+    'accountDeactivateStatus',
+
+    'searchResults',
+    'quotes',
+  ]
+}
 
 const persistedReducer = persistReducer(persistConfig, reducers);
-
 const store = createStore(persistedReducer, applyMiddleware(ReduxPromise));
 const persistor = persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <App />
+      <BrowserRouter>
+        <ScrollToTop>
+          <App />
+        </ScrollToTop>
+      </BrowserRouter>
     </PersistGate>
   </Provider>, 
   document.getElementById('root')
 );
-registerServiceWorker();

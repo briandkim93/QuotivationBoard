@@ -1,21 +1,35 @@
-# dependencies
-/node_modules
+# Back End #
 
-# testing
-/coverage
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+media
+static
+fixtures
+images
 
-# production
-/build
+confidential.py
 
-# misc
+# Front End #
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+node_modules
+coverage
+build
+
+confidential.js
+
+# Misc. #
+
 .DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-package-lock.json
+.gitignore

@@ -5,6 +5,7 @@ except ImportError:
         return a == b
 
 import binascii
+from datetime import datetime
 from hashlib import sha256
 from random import randint
 from secrets import token_bytes
@@ -148,8 +149,8 @@ class AccountToQuoteSetSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         request = self.context.get('request')
-        UTC_offset = request.data['UTCOffset']
-        clent_date = (timezone.now() + timezone.timedelta(hours=UTC_offset)).date()
+        client_date = request.data['date']
+        date = datetime(client_date['year'], client_date['month'], client_date['day']).date()
         try: 
             account_to_quoteset = AccountToQuoteSet.objects.get(account=request.user.id, quoteset=validated_data['quoteset'].id)
             return account_to_quoteset
@@ -159,25 +160,35 @@ class AccountToQuoteSetSerializer(serializers.ModelSerializer):
                 account=request.user,
                 quoteset=quoteset,
                 current_quote_index=randint(0, len(quoteset.quotes) - 1),
-                last_updated=clent_date
+                last_updated=date
             )
             account_to_quoteset.save()
             return account_to_quoteset
 
     def update(self, instance, validated_data):
         request = self.context.get('request')
-        UTC_offset = request.data['UTCOffset']
-        client_date = (timezone.now() + timezone.timedelta(hours=UTC_offset)).date()
-        quoteset = QuoteSet.objects.get(id=instance.quoteset.id)
-        account = Account.objects.get(id=instance.account.id)   
-        total_quotes = len(quoteset.quotes)
-        if instance.last_updated < client_date:
+        if request.data['method'] == 'change':
+            quoteset = QuoteSet.objects.get(id=instance.quoteset.id)
+            account = Account.objects.get(id=instance.account.id)   
+            total_quotes = len(quoteset.quotes)
             if instance.current_quote_index < total_quotes - 1:
                 instance.current_quote_index += 1
             else:
                 instance.current_quote_index = 0
-            instance.last_updated = client_date
-        instance.save()
+            instance.save()
+        if request.data['method'] == 'refresh':
+            client_date = request.data['date']
+            date = datetime(client_date['year'], client_date['month'], client_date['day']).date()
+            quoteset = QuoteSet.objects.get(id=instance.quoteset.id)
+            account = Account.objects.get(id=instance.account.id)   
+            total_quotes = len(quoteset.quotes)
+            if instance.last_updated < date:
+                if instance.current_quote_index < total_quotes - 1:
+                    instance.current_quote_index += 1
+                else:
+                    instance.current_quote_index = 0
+                instance.last_updated = date
+            instance.save()
         return instance
 
 class RefreshTokenSerializer(serializers.Serializer):

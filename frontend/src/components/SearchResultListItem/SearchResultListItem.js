@@ -2,26 +2,32 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchQuotes } from '../../actions/index';
-import { clearSearchResults } from '../../actions/index';
+import { toggleSignup } from '../../actions/authentication';
+import { addSource, clearSearchResults } from '../../actions';
 
 class SearchResultListItem extends Component {
   constructor(props) {
     super(props);
     
-    this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleSearchResultSelect = this.handleSearchResultSelect.bind(this);
   }
-  handleItemClick() {
-    this.props.fetchQuotes(this.props.term);
+
+  handleSearchResultSelect() {
+    if (this.props.token) {
+      this.props.addSource(this.props.authorId, this.props.token);
+    } else {
+      this.props.toggleSignup();
+    }
     this.props.clearSearchResults();
   }
+
   render() {
-    if (this.props.term === 'No Results Found') { 
-      return <li className="search-result-list-item">{this.props.term}</li>;
+    if (this.props.authorName === 'No Results Found') { 
+      return <li className="search-result-list-item">{this.props.authorName}</li>;
     } else {
       return (
-        <li className="search-result-list-item" onClick={this.handleItemClick}>
-          <span className="search-result-title">{this.props.term}</span>
+        <li className="search-result-list-item" onClick={this.handleSearchResultSelect}>
+          <span className="search-result-title">{this.props.authorName}</span>
           <span className="add-button">+</span>
         </li>
       );
@@ -29,8 +35,18 @@ class SearchResultListItem extends Component {
   }
 };
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchQuotes, clearSearchResults}, dispatch);
+function mapStateToProps(state) {
+  return {
+    token: state.token
+  };
 }
 
-export default connect(null, mapDispatchToProps)(SearchResultListItem);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    addSource: addSource, 
+    clearSearchResults: clearSearchResults,
+    toggleSignup: toggleSignup
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResultListItem);

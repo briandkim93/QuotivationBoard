@@ -1,68 +1,181 @@
 import axios from 'axios';
 
-export const FETCH_SEARCH_RESULTS = 'FETCH_SEARCH_RESULTS';
-export const FILTER_SEARCH_RESULTS = 'FILTER_SEARCH_RESULTS';
-export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
-export const TOGGLE_SIDE_PANEL = 'TOGGLE_SIDE_PANEL';
-export const FETCH_QUOTES = 'FETCH_QUOTES';
-export const REFRESH_QUOTE = 'REFRESH_QUOTE';
-export const REMOVE_SOURCE = 'REMOVE_SOURCE';
+import ACTION_TYPES from './types'
+import API_BASE_URL from './apiInfo';
 
-const baseURL = 'https://en.wikiquote.org/w/api.php?';
-
-export function toggleSidePanel() {
+export function toggleMenu() {
   return {
-    type: TOGGLE_SIDE_PANEL
+    type: ACTION_TYPES.TOGGLE_MENU
   };
 }
 
-export function fetchSearchResults(query) {
-  const options = `action=opensearch&redirects=resolve&limit=10&search=${query}`;
-  const request = axios.get(`${baseURL}${options}`);
+export function getSearchResults(query) {
+  const request = axios({
+    method: 'get',
+    url: `${API_BASE_URL}author/`
+  });
   return {
-    type: FETCH_SEARCH_RESULTS,
-    payload: request
-  };
-}
-
-export function filterSearchResults(terms) {
-  const parsedTerms = terms.map(term => term.replace(' ', '%20'));
-  const requestLinks = parsedTerms.map(parsedTerm => `${baseURL}action=query&prop=revisions&rvprop=content&format=json&formatversion=2&titles=${parsedTerm}`);
-  const requests = Promise.all(requestLinks.map(requestLink => axios.get(requestLink)));
-  return {
-    type: FILTER_SEARCH_RESULTS,
-    payload: requests
+    type: ACTION_TYPES.GET_SEARCH_RESULTS,
+    payload: request,
+    meta: { 
+      query: query 
+    }
   };
 }
 
 export function clearSearchResults() {
   return {
-    type: CLEAR_SEARCH_RESULTS
+    type: ACTION_TYPES.CLEAR_SEARCH_RESULTS
   };
 }
 
-export function fetchQuotes(term) {
-  const parsedTerm = term.replace(' ', '%20');
-  const options = `action=query&prop=revisions&rvprop=content&format=json&formatversion=2&titles=${parsedTerm}`;
-  const request = axios.get(`${baseURL}${options}`);
+export function getSources(token) {
+  const request = axios({
+    method: 'get',
+    url: `${API_BASE_URL}account_to_quoteset/`,
+    headers: {
+      'Authorization': `Token ${token}`
+    }
+  })
   return {
-    type: FETCH_QUOTES,
+    type: ACTION_TYPES.GET_SOURCES,
     payload: request
   };
 }
 
-export function refreshQuote(quoteObject) {
-  const refreshedQuoteObject = Object.assign({}, quoteObject);
-  refreshedQuoteObject.current < refreshedQuoteObject.total - 1 ? refreshedQuoteObject.current += 1 : refreshedQuoteObject.current = 0;
+export function addSource(authorId, token) {
+  const d = new Date();
+  const date = {
+    year: d.getFullYear(),
+    month: d.getMonth() + 1,
+    day: d.getDate()
+  };
+  const request = axios({
+    method: 'post',
+    url: `${API_BASE_URL}account_to_quoteset/`,
+    headers: {
+      'Authorization': `Token ${token}`
+    },
+    data: {
+      quoteset: authorId,
+      date: date
+    }
+  })
   return {
-    type: REFRESH_QUOTE,
-    payload: refreshedQuoteObject
+    type: ACTION_TYPES.ADD_SOURCE,
+    payload: request
   };
 }
 
-export function removeSource(source) {
+export function removeSource(sourceId, token) {
+  const request = axios({
+    method: 'delete',
+    url: `${API_BASE_URL}account_to_quoteset/${sourceId}/`,
+    headers: {
+      'Authorization': `Token ${token}`
+    }
+  });
   return {
-    type: REMOVE_SOURCE,
-    payload: source
+    type: ACTION_TYPES.REMOVE_SOURCE,
+    payload: request,
+    meta: { 
+      sourceId: sourceId
+    }
+  };
+}
+
+export function getFollowingList(sources) {
+  const requests = sources.map(source => axios({
+      method: 'get',
+      url: `${API_BASE_URL}author/${source.quoteset}/`,
+    })
+  );
+  return {
+    type: ACTION_TYPES.GET_FOLLOWING_LIST,
+    payload: Promise.all(requests)
+  };
+}
+
+export function getQuotes(sources, token) {
+  const requests = sources.map(source => axios({
+      method: 'get',
+      url: `${API_BASE_URL}quoteset/${source.quoteset}/`,
+      headers: {
+        'Authorization': `Token ${token}`
+      }
+    })
+  );
+  return {
+    type: ACTION_TYPES.GET_QUOTES,
+    payload: Promise.all(requests),
+    meta: {
+      sources: sources
+    }
+  };
+}
+
+export function changeQuote(quoteInfo, token) {
+  const changeRequest = axios({
+    method: 'patch',
+    url: `${API_BASE_URL}account_to_quoteset/${quoteInfo.sourceId}/`,
+    headers: {
+      'Authorization': `Token ${token}`
+    },
+    data: {
+      method: 'change'
+    }
+  })
+  const getQuoteSetRequest = axios({
+    method: 'get',
+    url: `${API_BASE_URL}quoteset/${quoteInfo.quotesetId}/`,
+    headers: {
+      'Authorization': `Token ${token}`
+    }
+  });
+  return {
+    type: ACTION_TYPES.CHANGE_QUOTE,
+    payload: Promise.all([changeRequest, getQuoteSetRequest]),
+    meta: { 
+      sourceId: quoteInfo.sourceId
+    }
+  };
+}
+
+export function refreshQuotes(sources, token) {
+  const d = new Date();
+  const date = {
+    year: d.getFullYear(),
+    month: d.getMonth() + 1,
+    day: d.getDate()
+  };
+  const changeRequests = sources.map(source => axios({
+      method: 'patch',
+      url: `${API_BASE_URL}account_to_quoteset/${source.id}/`,
+      headers: {
+        'Authorization': `Token ${token}`
+      },
+      data: {
+        method: 'refresh',
+        date: date
+      }
+    })
+    .catch(error => {
+      return error.response;
+    })
+  );
+  const getQuoteSetRequests = sources.map(source => axios({
+    method: 'get',
+    url: `${API_BASE_URL}quoteset/${source.quoteset}/`,
+    headers: {
+      'Authorization': `Token ${token}`
+      }
+    })
+  );
+  return {
+    type: ACTION_TYPES.REFRESH_QUOTES,
+    payload: Promise.all(changeRequests.concat(getQuoteSetRequests)),
+    meta: { 
+      sources: sources
+    }
   };
 }

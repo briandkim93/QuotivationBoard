@@ -13,7 +13,7 @@ urlpatterns = [
     path('api/quoteset/<int:pk>/', views.QuoteSetDetailView.as_view(), name='quoteset_detail'),
 
     path('api/account_to_quoteset/', views.AccountToQuoteSetListView.as_view(), name='account_to_quoteset_list'),
-    path('api/account_to_quoteset/create/', views.AccountToQuoteSetCreateView.as_view(), name='account_to_quoteset_create'),
+    path('api/account_to_quoteset/full/', views.AccountToQuoteSetFullListView.as_view(), name='account_to_quoteset_full'),
     path('api/account_to_quoteset/<int:pk>/', views.AccountToQuoteSetDetailView.as_view(), name='account_to_quoteset_detail'),
 
     path('api/auth/account/', views.AccountListView.as_view(), name='account_list'),

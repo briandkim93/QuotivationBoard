@@ -2,21 +2,41 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { removeSource } from '../../actions/index.js';
+import { removeSource } from '../../actions';
 
 class FollowingListItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleRemoveSource = this.handleRemoveSource.bind(this);
+  }
+
+  handleRemoveSource() {
+    const sourceId = this.props.sources.filter(source => source.quoteset === this.props.authorId)[0].id;
+    this.props.removeSource(sourceId, this.props.token)
+  }
+
   render() {
     return (
       <li className="following-list-item">
-        <span className="following-title">{this.props.title}</span>
-        <span className="close-button" onClick={() => this.props.removeSource(this.props.title)}>x</span>
+        <span className="following-title">{this.props.authorName}</span>
+        <span className="close-button" onClick={this.handleRemoveSource}>x</span>
       </li>
     );
   }
 }
 
-function mapDispacthToProps(dispatch) {
-  return bindActionCreators({removeSource}, dispatch);
+function mapStateToProps(state) {
+  return {
+    sources: state.sources,
+    token: state.token
+  };
 }
 
-export default connect(null, mapDispacthToProps)(FollowingListItem);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    removeSource: removeSource
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FollowingListItem);

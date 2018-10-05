@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-facebook-login": "^4.1.0",
     "react-redux": "^5.0.7",
-    "react-scripts": "1.1.4",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
     "redux": "^4.0.0",
     "redux-persist": "^5.10.0",
     "redux-promise": "^0.6.0"
@@ -17,6 +19,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "homepage": "http://ch4rl33.com/test"
+  }
 }

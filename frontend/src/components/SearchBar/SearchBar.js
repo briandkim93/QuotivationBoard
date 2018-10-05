@@ -2,59 +2,66 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchSearchResults } from '../../actions/index';
-import { filterSearchResults } from '../../actions/index';
-import { clearSearchResults } from '../../actions/index';
-
 import './SearchBar.css';
-import searchButton from './images/search-button.png';
+import { getSearchResults } from '../../actions/index';
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {query: ''};
+    this.state = {
+      displayLoader: false,
+      query: ''
+    };
 
     this.handleOnInputChange = this.handleOnInputChange.bind(this);
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.searchResults !== prevProps.searchResults) {
+      this.setState({
+        displayLoader: false
+      });
+      if (!this.props.searchResults.length) {
+        this.setState({
+          query: ''
+        });
+      }
+    }
+  } 
+
   handleOnInputChange(event) {
-    this.setState({query: event.target.value});
-    this.props.fetchSearchResults(event.target.value);
-    if (this.props.filteredSearchResults) {
-      this.props.clearSearchResults();
-    }
+    this.setState({
+      displayLoader: true,
+      query: event.target.value
+    });
+    this.props.getSearchResults(event.target.value);
   }
-  handleOnSubmit(event) {
-    event.preventDefault();
-    this.setState({query: ''});
-    if (this.state.query) {
-      this.props.filterSearchResults(this.props.searchResults);
-    }
-  }
+
   render() {
     return (
-      <form className="search-bar" onSubmit={this.handleOnSubmit}>
+      <div className="search-bar">
         <input 
           className="search-input" 
           placeholder="Search" 
-          value={this.state.query} 
+          value={this.state.query}
           onChange={this.handleOnInputChange} 
         />
-        <button className="search-button" type="submit">
-          <img src={searchButton} alt="Search Button" />
-        </button>
-      </form>
+        <div className="search-icon-container">
+          {this.state.displayLoader ? <div className="loader" /> : <img className="search-icon" src="/images/decorators/search-icon.png" alt="Search Icon" />}
+        </div>
+      </div>
     );
   }
 }
 
-function mapStateToProps({searchResults, filteredSearchResults}) {
-  return {searchResults, filteredSearchResults};
+function mapStateToProps(state) {
+  return {
+    searchResults: state.searchResults
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchSearchResults, filterSearchResults, clearSearchResults}, dispatch);
+  return bindActionCreators({getSearchResults}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

@@ -10,8 +10,7 @@ function UserInfoReducer(state={}, action) {
           email: action.payload.data.user.email,
           emailVerified: action.payload.data.user.email_verified,
           dateJoined: action.payload.data.user.date_joined,
-          provider: action.payload.data.user.provider,
-          followingList: action.payload.data.user.following_list
+          provider: action.payload.data.user.provider
         };
       } else {
         return state;
@@ -24,8 +23,7 @@ function UserInfoReducer(state={}, action) {
           email: action.payload.data.user.email,
           emailVerified: action.payload.data.user.email_verified,
           dateJoined: action.payload.data.user.date_joined,
-          provider: action.payload.data.user.provider,
-          followingList: action.payload.data.user.following_list
+          provider: action.payload.data.user.provider
         };
       } else {
         return state;
@@ -38,8 +36,7 @@ function UserInfoReducer(state={}, action) {
           email: action.payload.data.user.email,
           emailVerified: action.payload.data.user.email_verified,
           dateJoined: action.payload.data.user.date_joined,
-          provider: action.payload.data.user.provider,
-          followingList: action.payload.data.user.following_list
+          provider: action.payload.data.user.provider
         };
       } else {
         return state;
@@ -52,8 +49,7 @@ function UserInfoReducer(state={}, action) {
           email: state.email,
           emailVerified: true,
           dateJoined: state.dateJoined,
-          provider: state.provider,
-          followingList: state.followingList
+          provider: state.provider
         };
       } else {
         return state;
@@ -66,26 +62,7 @@ function UserInfoReducer(state={}, action) {
           email: action.payload.data.email,
           emailVerified: false,
           dateJoined: state.dateJoined,
-          provider: state.provider,
-          followingList: state.followingList
-        };
-      } else {
-        return state;
-      }
-    case ACTION_TYPES.ADD_SOURCE:
-      if (action.payload.status === 201) {
-        const updatedFollowingList = state.followingList.slice();
-        if (!updatedFollowingList.includes(action.payload.data.quoteset)) {
-          updatedFollowingList.push(action.payload.data.quoteset);
-        }
-        return {
-          uid: state.uid,
-          username: state.username,
-          email: state.email,
-          emailVerified: state.emailVerified,
-          dateJoined: state.dateJoined,
-          provider: state.provider,
-          followingList: updatedFollowingList
+          provider: state.provider
         };
       } else {
         return state;
@@ -99,7 +76,7 @@ function UserInfoReducer(state={}, action) {
         return state;
       }
     case ACTION_TYPES.CLEAR_STATE:
-      return null;
+      return {};
     default:
       return state;
   }

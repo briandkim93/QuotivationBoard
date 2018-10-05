@@ -3,20 +3,20 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import './SearchResultList.css';
-import upPointer from './images/up-pointer.png';
 import { clearSearchResults } from '../../actions/index';
 
 import SearchResultListItem from '../SearchResultListItem/SearchResultListItem';
 
 class SearchResultList extends Component {
   renderList() {
-    const SearchResultListItems = this.props.filteredSearchResults.map(
-      result => <SearchResultListItem key={result} term={result} />
+    const SearchResultListItems = this.props.searchResults.map(
+      result => <SearchResultListItem key={`author-${result.id}`} authorName={result.name} authorId={result.id} />
     );
     return SearchResultListItems;
   }
+
   render() {
-    if (this.props.filteredSearchResults.length > 0) {
+    if (this.props.searchResults.length > 0) {
       return (
         <ul className="search-result-list">
           {this.renderList()}
@@ -24,7 +24,7 @@ class SearchResultList extends Component {
             className="search-result-list-item clear-button"
             onClick={this.props.clearSearchResults}
           >
-            <img src={upPointer} />
+            <img src="/images/decorators/up-pointer.png" alt='Search Results Toggle Button' />
           </li>
         </ul>
       );
@@ -33,8 +33,8 @@ class SearchResultList extends Component {
   }
 }
 
-function mapStateToProps({filteredSearchResults}) {
-  return {filteredSearchResults};
+function mapStateToProps({searchResults}) {
+  return {searchResults};
 }
 
 function mapDispatchToProps(dispatch) {
