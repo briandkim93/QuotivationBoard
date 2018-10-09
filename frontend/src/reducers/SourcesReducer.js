@@ -1,40 +1,39 @@
 import ACTION_TYPES from '../actions/types';
 
 function SourcesReducer(state=[], action) {
-  let succesfulRequests = [];
-  let sources = [];
+  let sources = state.slice();
   switch (action.type) {
     case ACTION_TYPES.GET_SOURCES:
       if (action.payload.status === 200) {
-        return action.payload.data;
-      } else {
-        return state;
+        sources = action.payload.data.sort((a, b) => a.id < b.id ? -1 : 1);
       }
+      return sources;
     case ACTION_TYPES.ADD_SOURCE:
-      const updatedState = state.slice();
       if (action.payload.status === 201) {
-        if (!state.map(source => source.quoteset).includes(action.payload.data.quoteset)) {
-          updatedState.push(action.payload.data);
+        if (!sources.map(source => source.quoteset).includes(action.payload.data.quoteset)) {
+          sources.push(action.payload.data);
         }
       } 
-      return updatedState;
+      return sources;
     case ACTION_TYPES.REMOVE_SOURCE:
-      return state.filter(source => source.id !== action.meta.sourceId);
+      sources = state.filter(source => source.id !== action.meta.sourceId);
+      return sources;
     case ACTION_TYPES.CHANGE_QUOTE:
-      sources = state.slice();
-      return sources.map(source => {
-        if (source.id === action.meta.sourceId) {
-          source.current_quote_index += 1;
-        }
-        return source;
-      });
+      if (action.payload.status === 200) {
+        sources = sources.map(source => {
+          if (source.id === action.payload.data.id) {
+            source.current_quote_index += 1;
+            source.quote = action.payload.data.quote;
+          }
+          return source;
+        });
+      }
+      return sources;
     case ACTION_TYPES.REFRESH_QUOTES:
-      sources = state;
       if (action.payload.length > 0) {
-        succesfulRequests = action.payload.filter(response => response.status === 200);
+        const succesfulRequests = action.payload.filter(response => response.status === 200);
         if (action.payload.length === succesfulRequests.length) {
-          sources = action.payload.filter(response => response.config.url.includes('api/account_to_quoteset'));
-          sources = sources.map(source => source.data);
+          sources = action.payload.map(response => response.data);
         }
       }
       return sources;

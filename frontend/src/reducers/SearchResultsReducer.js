@@ -18,9 +18,7 @@ function SearchResultsReducer(state=[], action) {
         }
         searchResults = searchResults.slice(0, 5);
         if (searchResults.length === 0) {
-          searchResults.push({
-            name: 'No Results Found'
-          });
+          searchResults.push({id: null});
         }
       }
       return searchResults;

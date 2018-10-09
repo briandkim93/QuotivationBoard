@@ -9,6 +9,12 @@ export function toggleMenu() {
   };
 }
 
+export function closeMenu() {
+  return {
+    type: ACTION_TYPES.CLOSE_MENU
+  };
+}
+
 export function getSearchResults(query) {
   const request = axios({
     method: 'get',
@@ -18,7 +24,8 @@ export function getSearchResults(query) {
     type: ACTION_TYPES.GET_SEARCH_RESULTS,
     payload: request,
     meta: { 
-      query: query 
+      query: query,
+      time: Date.now()
     }
   };
 }
@@ -84,40 +91,10 @@ export function removeSource(sourceId, token) {
   };
 }
 
-export function getFollowingList(sources) {
-  const requests = sources.map(source => axios({
-      method: 'get',
-      url: `${API_BASE_URL}author/${source.quoteset}/`,
-    })
-  );
-  return {
-    type: ACTION_TYPES.GET_FOLLOWING_LIST,
-    payload: Promise.all(requests)
-  };
-}
-
-export function getQuotes(sources, token) {
-  const requests = sources.map(source => axios({
-      method: 'get',
-      url: `${API_BASE_URL}quoteset/${source.quoteset}/`,
-      headers: {
-        'Authorization': `Token ${token}`
-      }
-    })
-  );
-  return {
-    type: ACTION_TYPES.GET_QUOTES,
-    payload: Promise.all(requests),
-    meta: {
-      sources: sources
-    }
-  };
-}
-
-export function changeQuote(quoteInfo, token) {
-  const changeRequest = axios({
+export function changeQuote(source, token) {
+  const request = axios({
     method: 'patch',
-    url: `${API_BASE_URL}account_to_quoteset/${quoteInfo.sourceId}/`,
+    url: `${API_BASE_URL}account_to_quoteset/${source.id}/`,
     headers: {
       'Authorization': `Token ${token}`
     },
@@ -125,19 +102,9 @@ export function changeQuote(quoteInfo, token) {
       method: 'change'
     }
   })
-  const getQuoteSetRequest = axios({
-    method: 'get',
-    url: `${API_BASE_URL}quoteset/${quoteInfo.quotesetId}/`,
-    headers: {
-      'Authorization': `Token ${token}`
-    }
-  });
   return {
     type: ACTION_TYPES.CHANGE_QUOTE,
-    payload: Promise.all([changeRequest, getQuoteSetRequest]),
-    meta: { 
-      sourceId: quoteInfo.sourceId
-    }
+    payload: request,
   };
 }
 
@@ -148,7 +115,7 @@ export function refreshQuotes(sources, token) {
     month: d.getMonth() + 1,
     day: d.getDate()
   };
-  const changeRequests = sources.map(source => axios({
+  const requests = sources.map(source => axios({
       method: 'patch',
       url: `${API_BASE_URL}account_to_quoteset/${source.id}/`,
       headers: {
@@ -163,17 +130,9 @@ export function refreshQuotes(sources, token) {
       return error.response;
     })
   );
-  const getQuoteSetRequests = sources.map(source => axios({
-    method: 'get',
-    url: `${API_BASE_URL}quoteset/${source.quoteset}/`,
-    headers: {
-      'Authorization': `Token ${token}`
-      }
-    })
-  );
   return {
     type: ACTION_TYPES.REFRESH_QUOTES,
-    payload: Promise.all(changeRequests.concat(getQuoteSetRequests)),
+    payload: Promise.all(requests),
     meta: { 
       sources: sources
     }

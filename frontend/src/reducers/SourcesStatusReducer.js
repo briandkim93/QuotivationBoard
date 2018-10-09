@@ -1,10 +1,9 @@
 import ACTION_TYPES from '../actions/types';
 
-function FollowingListReducer(state=[], action) {
+function SourcesStatusReducer(state=null, action) {
   switch (action.type) {
-    case ACTION_TYPES.GET_FOLLOWING_LIST:
-      const followingList = action.payload.map(response => response.data);
-      return followingList;
+    case ACTION_TYPES.GET_SOURCES:
+      return action.payload.status;
     case ACTION_TYPES.LOGOUT:
       return [];
     case ACTION_TYPES.DEACTIVATE_ACCOUNT:
@@ -20,4 +19,4 @@ function FollowingListReducer(state=[], action) {
   }
 }
 
-export default FollowingListReducer;
+export default SourcesStatusReducer;

@@ -22,8 +22,7 @@ import AccountDeactivateStatusReducer from './authentication/AccountDeactivateSt
 import ToggleMenuReducer from './ToggleMenuReducer';
 import SearchResultsReducer from './SearchResultsReducer';
 import SourcesReducer from './SourcesReducer';
-import FollowingListReducer from './FollowingListReducer';
-import QuotesReducer from './QuotesReducer';
+import SourcesStatusReducer from './SourcesStatusReducer';
 
 const rootReducer = combineReducers({
   displaySignup: ToggleSignupReducer,
@@ -48,8 +47,7 @@ const rootReducer = combineReducers({
   displayMenu: ToggleMenuReducer,
   searchResults: SearchResultsReducer,
   sources: SourcesReducer,
-  followingList: FollowingListReducer,
-  quotes: QuotesReducer
+  sourcesStatus: SourcesStatusReducer
 });
 
 export default rootReducer;

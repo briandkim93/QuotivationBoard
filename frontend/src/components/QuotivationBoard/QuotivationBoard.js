@@ -4,18 +4,22 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import './QuotivationBoard.css';
-import QuotivationBoardItem from '../QuotivationBoardItem/QuotivationBoardItem';
-import { getQuotes } from '../../actions';
+import { changeQuote, closeMenu } from '../../actions';
 import { toggleSignup, closeSignup, toggleLogin, closeLogin, closePasswordResetRequest, logout } from '../../actions/authentication';
 
 class QuotivationBoard extends Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      displayLoader: false
+    };
+
     this.handleToggleSignup = this.handleToggleSignup.bind(this);
     this.handleToggleLogin = this.handleToggleLogin.bind(this);
     this.handleEsc = this.handleEsc.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleQuoteChange = this.handleQuoteChange.bind(this);
+    this.renderQuoteBoard = this.renderQuoteBoard.bind(this);
   }
 
   componentDidMount() {
@@ -23,14 +27,23 @@ class QuotivationBoard extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.refreshTokenStatus !== prevProps.refreshTokenStatus) {
+    if (this.props.refreshTokenStatus !== prevProps.refreshTokenStatus && this.props.token) {
       if (this.props.refreshTokenStatus.status === 200) {
-        this.props.getQuotes(this.props.sources, this.props.token);
+        this.props.getSources(this.props.token);
       }
     }
-    if (this.props.sources !== prevProps.sources) {
-      this.props.getQuotes(this.props.sources, this.props.token);
+    if (this.props.token !== prevProps.token && this.props.token) {
+        this.setState({
+          displayLoader: true
+      }); 
     }
+    if (this.props.sourcesStatus !== prevProps.sourcesStatus) {
+      setTimeout(() => {
+        this.setState({
+          displayLoader: false
+        }); 
+      }, 1000);
+    } 
   }
   
   handleToggleSignup() {
@@ -50,6 +63,7 @@ class QuotivationBoard extends Component {
       this.props.closeLogin();
       this.props.closeSignup();
       this.props.closePasswordResetRequest();
+      this.props.closeMenu();
     }
   }
 
@@ -62,99 +76,103 @@ class QuotivationBoard extends Component {
     }
   }
 
-  renderList() {
-    const quotesHTML = this.props.quotes.map(
-      (quoteInfo, index) => 
-        <QuotivationBoardItem 
-          key={`quote-${index}`}
-          backgroundImageId={index % 10}
-          quoteInfo={quoteInfo}
-        />
-    );
+  getBoardType(sources) {
+    if (sources.length === 0) {
+      return 'empty-quotivation-board';
+    } else if (sources.length === 1) {
+      return 'singular-quotivation-board';
+    } else {
+      return 'assorted-quotivation-board';
+    }
+  }
+
+  handleQuoteChange(source) {
+    this.props.changeQuote(source, this.props.token);
+  }
+
+  renderQuotes(sources) {
+    const quotesHTML = sources.map((source, index) => {
+      const quoteWords = source.quote.split(' ');
+      const lastWord = quoteWords.pop();
+      const poppedQuoteText = quoteWords.join(' ');
+      return (
+        <li className={`quotivation-board-item bg-img-${index % 10}`} key={`source-${index}`}>
+          <div className="quote">
+            <div>
+              {poppedQuoteText}&nbsp;
+              <div className="quote-trailer">
+                <div className="quote-last-word">
+                  {lastWord}
+                </div>
+                <div className="quote-change-button" onClick={() => this.handleQuoteChange(source)}>
+                  &nbsp;&#10149;
+                </div>
+              </div>
+            </div>
+            <div className="quote-source">
+              -{source.author}
+            </div>
+          </div>
+        </li>
+        );
+    });
     return quotesHTML;
   }
 
-  render() {
-    if (this.props.quotes.length === 0) {
+  renderQuoteBoard(boardType) {
+    if (boardType === 'empty-quotivation-board') {
       return (
-        <div className="empty-quote-board">
-          {this.props.token
-            ? (
-              <div className="auth-bar">
-                <span>{this.props.userInfo.provider !== 'facebook' && <Link className="auth-link" to='/account/settings'>Account</Link>}</span>
-                <span onClick={this.handleLogout}><Link className="auth-link" to='/'>Logout</Link></span>
-              </div>
-            )
-            : (
-              <div className="auth-bar">
-                <span className="auth-link" onClick={this.handleToggleSignup}>Sign Up</span>
-                <span className="auth-link" onClick={this.handleToggleLogin}>Login</span>
-              </div>
-            )
-          }
-          <p>
-            Add A
-            <br/>
-            Source
-            <br/>
-            To Begin
-          </p>
+        <div className={`no-sources-message ${this.props.displaySignup || this.props.displayLogin || this.props.displayPasswordResetRequest ? 'no-sources-message-hidden' : ''}`}>
+          Add A
+          <br/>
+          Source
+          <br/>
+          To Begin
         </div>
       );
-    } else if (this.props.quotes.length === 1) {
-      return (
-        <div className="singular-quote-board">
-          <ul>
-            {this.props.token
-              ? (
-                <div className="auth-bar">
-                  <span>{this.props.userInfo.provider !== 'facebook' && <Link className="auth-link" to='/account/settings'>Account</Link>}</span>
-                  <span onClick={this.handleLogout}><Link className="auth-link" to='/'>Logout</Link></span>
-                </div>
-              )
-              : (
-                <div className="auth-bar">
-                  <span className="auth-link" onClick={this.handleToggleSignup}>Sign Up</span>
-                  <span className="auth-link" onClick={this.handleToggleLogin}>Login</span>
-                </div>
-              )
-            }
-            <QuotivationBoardItem 
-              quoteInfo={this.props.quotes[0]}
-            />
-          </ul>
-        </div>
-      );
-    } else {
-      return (
-        <div className="quote-board">
-          {this.props.token
-            ? (
-              <div className="auth-bar">
-                <span>{this.props.userInfo.provider !== 'facebook' && <Link className="auth-link" to='/account/settings'>Account</Link>}</span>
-                <span onClick={this.handleLogout}><Link className="auth-link" to='/'>Logout</Link></span>
-              </div>
-            )
-            : (
-              <div className="auth-bar">
-                <span className="auth-link" onClick={this.handleToggleSignup}>Sign Up</span>
-                <span className="auth-link" onClick={this.handleToggleLogin}>Login</span>
-              </div>
-            )
-          }
-          <ul>
-            {this.renderList()}
-          </ul>
-        </div>
-      );
+    } else if (boardType === 'singular-quotivation-board') {
+      return this.renderQuotes(this.props.sources)[0];
+    } else if (boardType === 'assorted-quotivation-board') {
+      return this.renderQuotes(this.props.sources);
     }
+  }
+
+  render() {
+    return (
+      <ul 
+        className={`quotivation-board ${this.getBoardType(this.props.sources)} ${this.props.displaySignup || this.props.displayLogin || this.props.displayPasswordResetRequest ? 'quotivation-board-dimmed' : ''}`}
+        onClick={this.props.closeMenu}
+      >
+        {this.props.token
+          ? (
+            <div className="authentication-bar">
+              <span>{this.props.userInfo.provider !== 'facebook' && <Link className="authentication-link" to='/account/settings'>Account</Link>}</span>
+              <span onClick={this.handleLogout}><Link className="authentication-link" to='/'>Logout</Link></span>
+            </div>
+          )
+          : (
+            <div className="authentication-bar">
+              <span className="authentication-link" onClick={this.handleToggleSignup}>Sign Up</span>
+              <span className="authentication-link" onClick={this.handleToggleLogin}>Login</span>
+            </div>
+          )
+        }
+        {this.state.displayLoader
+          ? <div className="loader loader-lg quotivation-board-loader" />
+          : this.renderQuoteBoard(this.getBoardType(this.props.sources))
+        }
+      </ul>
+    );
   }
 }
 
 function mapStateToProps(state) {
   return {
-    quotes: state.quotes,
+    displaySignup: state.displaySignup,
+    displayLogin: state.displayLogin,
+    displayPasswordResetRequest: state.displayPasswordResetRequest,
     sources: state.sources,
+    sourcesStatus: state.sourcesStatus,
     token: state.token,
     userInfo: state.userInfo
   };
@@ -168,7 +186,8 @@ function mapDispatchToProps(dispatch) {
     closeLogin: closeLogin,
     closePasswordResetRequest: closePasswordResetRequest,
     logout: logout,
-    getQuotes: getQuotes
+    closeMenu: closeMenu,
+    changeQuote: changeQuote
   }, dispatch);
 }
 

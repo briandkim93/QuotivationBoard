@@ -39,8 +39,7 @@ const persistConfig = {
     'emailChangeStatus',
     'accountDeactivateStatus',
 
-    'searchResults',
-    'quotes',
+    'searchResults'
   ]
 }
 
