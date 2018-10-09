@@ -10,10 +10,11 @@ class SearchBar extends Component {
     super(props);
     this.state = {
       displayLoader: false,
+      searchTimeout: 0,
       query: ''
     };
 
-    this.handleOnInputChange = this.handleOnInputChange.bind(this);
+    this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -29,25 +30,40 @@ class SearchBar extends Component {
     }
   } 
 
-  handleOnInputChange(event) {
+  handleSearchTermChange(event) {
+    const query = event.target.value;
+    if (query === '') {
+      this.setState({
+        displayLoader: false
+      });
+      clearTimeout(this.state.searchTimeout);
+    }
+    if (this.state.searchTimeout) {
+      clearTimeout(this.state.searchTimeout);
+    }
     this.setState({
       displayLoader: true,
-      query: event.target.value
+      query: query,
+      searchTimeout: setTimeout(() => {
+        this.props.getSearchResults(query)
+      }, 1000)
     });
-    this.props.getSearchResults(event.target.value);
   }
 
   render() {
     return (
       <div className="search-bar">
         <input 
-          className="search-input" 
+          className="search-bar-input" 
           placeholder="Search" 
           value={this.state.query}
-          onChange={this.handleOnInputChange} 
+          onChange={this.handleSearchTermChange} 
         />
-        <div className="search-icon-container">
-          {this.state.displayLoader ? <div className="loader" /> : <img className="search-icon" src="/images/decorators/search-icon.png" alt="Search Icon" />}
+        <div className="search-bar-icon-container">
+          {this.state.displayLoader 
+            ? <div className="loader" /> 
+            : <img className="search-bar-icon" src="/images/decorators/search-icon.png" alt="Search Icon" />
+          }
         </div>
       </div>
     );
