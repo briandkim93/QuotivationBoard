@@ -144,7 +144,9 @@ class AccountToQuoteSetSerializer(serializers.ModelSerializer):
             'id',
             'account', 
             'current_quote_index', 
-            'last_updated', 
+            'last_updated',
+            'author',
+            'quote'
         )
 
     def create(self, validated_data):
@@ -156,11 +158,14 @@ class AccountToQuoteSetSerializer(serializers.ModelSerializer):
             return account_to_quoteset
         except AccountToQuoteSet.DoesNotExist:
             quoteset = QuoteSet.objects.get(id=validated_data['quoteset'].id)
+            current_quote_index = randint(0, len(quoteset.quotes) - 1)
             account_to_quoteset = AccountToQuoteSet(
                 account=request.user,
                 quoteset=quoteset,
-                current_quote_index=randint(0, len(quoteset.quotes) - 1),
-                last_updated=date
+                current_quote_index=current_quote_index,
+                last_updated=date,
+                author=quoteset.author,
+                quote=quoteset.quotes[current_quote_index]
             )
             account_to_quoteset.save()
             return account_to_quoteset
@@ -175,6 +180,7 @@ class AccountToQuoteSetSerializer(serializers.ModelSerializer):
                 instance.current_quote_index += 1
             else:
                 instance.current_quote_index = 0
+            instance.quote = quoteset.quotes[instance.current_quote_index]
             instance.save()
         if request.data['method'] == 'refresh':
             client_date = request.data['date']
@@ -188,6 +194,7 @@ class AccountToQuoteSetSerializer(serializers.ModelSerializer):
                 else:
                     instance.current_quote_index = 0
                 instance.last_updated = date
+            instance.quote = quoteset.quotes[instance.current_quote_index]
             instance.save()
         return instance
 

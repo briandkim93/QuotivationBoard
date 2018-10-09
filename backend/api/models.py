@@ -54,3 +54,5 @@ class AccountToQuoteSet(models.Model):
     quoteset = models.ForeignKey(QuoteSet, on_delete=models.CASCADE)
     current_quote_index = models.IntegerField()
     last_updated = models.DateField()
+    author = models.CharField(max_length=255)
+    quote = models.TextField(max_length=350)
