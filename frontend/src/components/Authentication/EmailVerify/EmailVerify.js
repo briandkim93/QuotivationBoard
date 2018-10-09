@@ -82,7 +82,7 @@ class EmailVerify extends Component {
             onSubmit={this.handleFormSubmit}
           >
             <div className="text-center">
-              <h1 className="font-weight-light text-warning mb-1">
+              <h1 className="font-weight-light mb-1">
                 Verify Email
               </h1>
             </div>
@@ -123,8 +123,8 @@ class EmailVerify extends Component {
                   <div className="text-danger small">
                     {this.state.response.status === 0 && this.state.response.message}
                   </div>
-                  <button className="btn btn-warning float-right" type="submit">
-                    Verify Email
+                  <button className="btn btn-blue float-right" type="submit">
+                    Verify
                   </button>
                 </div>
               )
@@ -133,7 +133,7 @@ class EmailVerify extends Component {
         </div>
         <div className="row justify-content-center m-0 mt-5">
           <div className="col-11 center-block text-center">
-            <Link className="text-link text-warning" to='/'>Back to Homepage</Link>
+            <Link className="text-link text-link-violet" to='/'>Back to Homepage</Link>
           </div>
         </div>
       </div>

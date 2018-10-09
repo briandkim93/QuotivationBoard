@@ -132,7 +132,7 @@ class PasswordReset extends Component {
             onSubmit={this.handleFormSubmit}
           >
             <div className="text-center">
-              <h1 className="font-weight-light text-warning mb-1">
+              <h1 className="font-weight-light mb-1">
                 Password Reset
               </h1>
             </div>
@@ -173,7 +173,7 @@ class PasswordReset extends Component {
                   <div className="text-danger small">
                     {this.state.response.message}
                   </div>
-                  <button className="btn btn-warning float-right" type="submit">
+                  <button className="btn btn-blue float-right" type="submit">
                     Confirm
                   </button>
                 </div>
@@ -183,7 +183,7 @@ class PasswordReset extends Component {
         </div>
         <div className="row justify-content-center m-0 mt-5">
           <div className="col-11 center-block text-center">
-            <Link className="text-link text-warning" to='/'>Back to Homepage</Link>
+            <Link className="text-link text-link-violet" to='/'>Back to Homepage</Link>
           </div>
         </div>
       </div>

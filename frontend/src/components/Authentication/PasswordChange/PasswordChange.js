@@ -143,10 +143,10 @@ class PasswordChange extends Component {
             onSubmit={this.handleFormSubmit}
           >
             <div className="text-center">
-              <h1 className="font-weight-light text-warning mb-1">
+              <h1 className="font-weight-light mb-1">
                 Account Settings
               </h1>
-              <h4 className="font-weight-light text-white-50 mb-1">
+              <h4 className="font-weight-light text-white mb-1">
                 Change Password
               </h4>
             </div>
@@ -197,7 +197,7 @@ class PasswordChange extends Component {
                   <div className="text-danger small">
                     {this.state.response.position === 2 && this.state.response.message}
                   </div>
-                  <button className="btn btn-warning float-right" type="submit">
+                  <button className="btn btn-blue float-right" type="submit">
                     Confirm
                   </button>
                 </div>
@@ -221,10 +221,10 @@ class PasswordChange extends Component {
           <div className="col-11 center-block text-center">
             {this.props.token
               ? (
-                <Link className="text-link text-warning" to='/account/settings'>Back to Settings</Link>
+                <Link className="text-link text-link-violet" to='/account/settings'>Back to Settings</Link>
               )
               : (
-                <Link className="text-link text-warning" to='/'>Back to Homepage</Link>
+                <Link className="text-link text-link-violet" to='/'>Back to Homepage</Link>
               )
             }
           </div>

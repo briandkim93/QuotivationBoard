@@ -116,7 +116,7 @@ class PasswordResetRequest extends Component {
               <div className="text-danger small">
                 {this.state.response.message}
               </div>
-              <button type="submit" className="btn btn-warning float-right">
+              <button type="submit" className="btn btn-blue float-right">
                 Send
               </button>
             </div>

@@ -126,10 +126,10 @@ class EmailChange extends Component {
             onSubmit={this.handleFormSubmit}
           >
             <div className="text-center">
-              <h1 className="font-weight-light text-warning mb-1">
+              <h1 className="font-weight-light mb-1">
                 Account Settings
               </h1>
-              <h4 className="font-weight-light text-white-50 mb-1">
+              <h4 className="font-weight-light text-white mb-1">
                 Change Email
               </h4>
             </div>
@@ -170,7 +170,7 @@ class EmailChange extends Component {
                   <div className="text-danger small">
                     {this.state.response.message}
                   </div>
-                  <button type="submit" className="btn btn-warning float-right">Confirm</button>
+                  <button type="submit" className="btn btn-blue float-right">Confirm</button>
                 </div>
               )
             )}
@@ -192,10 +192,10 @@ class EmailChange extends Component {
           <div className="col-11 center-block text-center">
             {this.props.token
               ? (
-                <Link className="text-link text-warning" to='/account/settings'>Back to Settings</Link>
+                <Link className="text-link text-link-violet" to='/account/settings'>Back to Settings</Link>
               )
               : (
-                <Link className="text-link text-warning" to='/'>Back to Homepage</Link>
+                <Link className="text-link text-link-violet" to='/'>Back to Homepage</Link>
               )
             }
           </div>

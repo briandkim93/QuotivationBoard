@@ -51,10 +51,10 @@ class EmailVerifyRequest extends Component {
   render() {
     return (
       <div className="row justify-content-center m-0 mt-5">
-        <div className="col-11 center-block p-3">
+        <div className="col-11 center-block text-white-50 p-3">
           <div className="text-center">
-            <h1 className="font-weight-light text-warning mb-1">Account Settings</h1>
-            <h4 className="font-weight-light text-white-50 mb-1">Verification Link Request</h4>
+            <h1 className="font-weight-light mb-1">Account Settings</h1>
+            <h4 className="font-weight-light text-white mb-1">Verification Link Request</h4>
           </div>
           <hr className="border-black" />
           {(this.props.token && (this.props.userInfo.provider !== 'facebook'))
@@ -66,7 +66,7 @@ class EmailVerifyRequest extends Component {
                 {this.state.response.status === 1 && <div className="mb-5">Please check your inbox to continue.</div>}
                 {this.state.response.status === 0 && this.state.response.message && <div className="mb-5">Please try again at a later time.</div>}
                 <div className="text-center">
-                  <Link className="text-link text-warning" to='/account/settings'>Back to Settings</Link>
+                  <Link className="text-link text-link-violet" to='/account/settings'>Back to Settings</Link>
                 </div>
               </div>
             )
@@ -81,7 +81,7 @@ class EmailVerifyRequest extends Component {
                   </div>
                 </div>
                 <div className="text-center">
-                  <Link className="text-link text-warning" to='/'>Back to Homepage</Link>
+                  <Link className="text-link text-link-violet" to='/'>Back to Homepage</Link>
                 </div>
               </div>
             )

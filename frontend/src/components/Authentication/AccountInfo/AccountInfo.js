@@ -20,7 +20,7 @@ class AccountInfo extends Component {
     return (
       <div className="row justify-content-center font-weight-light text-white-50 m-0 mt-5">
         <div className="account-settings-form col-11 center-block p-3">
-          <h1 className="font-weight-light text-center text-warning mb-1">
+          <h1 className="font-weight-light text-center mb-1">
             Account Settings
           </h1>
           <hr className="border-black" />
@@ -43,7 +43,7 @@ class AccountInfo extends Component {
                     <div className="d-inline-block text-center pl-0 pl-sm-5">
                       ••••••••
                     </div>
-                    <Link to='/account/settings/password' className='float-right text-link text-violet small'>Change</Link>
+                    <Link to='/account/settings/password' className='float-right text-link text-link-violet small'>Change</Link>
                   </li>
                   <li className="list-group-item bg-dark-grey border-black">
                     <div className="account-info-description d-inline-block text-right pr-4 pr-sm-0">
@@ -52,7 +52,7 @@ class AccountInfo extends Component {
                     <div className="account-info-email d-inline-block text-center text-truncate align-bottom pl-0 pl-sm-5">
                       {this.props.userInfo.email}
                     </div>
-                    <Link to='/account/settings/email' className='float-right text-link text-violet small'>Change</Link>
+                    <Link to='/account/settings/email' className='float-right text-link text-link-violet small'>Change</Link>
                   </li>
                   <li className="list-group-item bg-dark-grey border-black">
                     <div className="account-info-description d-inline-block text-right pr-4 pr-sm-0">
@@ -61,7 +61,7 @@ class AccountInfo extends Component {
                     <div className="d-inline-block text-center pl-0 pl-sm-5">
                       {this.props.userInfo.emailVerified ? 'Yes' : 'No'}
                     </div>
-                    <Link to='/account/settings/verify' className='float-right text-link text-violet small'>Resend</Link>
+                    <Link to='/account/settings/verify' className='float-right text-link text-link-violet small'>Resend</Link>
                   </li>
                   <li className="list-group-item bg-dark-grey border-black">
                     <div className="account-info-description d-inline-block text-right pr-4 pr-sm-0">
@@ -90,7 +90,7 @@ class AccountInfo extends Component {
             )
           }
           <div className="text-center">
-            <Link className="text-link text-warning" to='/'>Back to Homepage</Link>
+            <Link className="text-link text-link-violet" to='/'>Back to Homepage</Link>
           </div>
         </div>
       </div>

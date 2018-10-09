@@ -100,7 +100,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className={`row justify-content-center mw-100 ${!this.props.displayLogin ? 'd-none' : ''}`}>
+      <div className={`row justify-content-center ${!this.props.displayLogin ? 'd-none' : ''}`}>
         <form 
           className="popup-form login-form col-11 col-sm-6 center-block position-fixed bg-light p-3" 
           encType='multipart/form-data' 
@@ -142,7 +142,7 @@ class Login extends Component {
             <span className="btn btn-link btn-sm text-primary p-0" onClick={this.handleTogglePasswordResetRequest}>(Forgot Username or Password?)</span>
           </div>
           <div className="w-100 overflow-auto mt-2">
-            <button type="submit" className="btn btn-warning float-right">Login</button>
+            <button type="submit" className="btn btn-blue float-right">Login</button>
           </div>
           <div>
             <p className="popup-form-seperator my-4">
