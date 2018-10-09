@@ -1,48 +1,64 @@
-/*Extra small devices (portrait phones, less than 576px)*/
-.auth-bar {
-  position: absolute;
-  right: 0;
-
-  margin-top: 10px;
-}
-
-.auth-link {
+.authentication-bar {
   font-size: 1.2rem;
 
+  position: absolute;
+  z-index: 100;
+  top: 10px;
+  right: 0;
+}
+
+.authentication-link {
   margin-right: 30px;
 
   color: #f4f4f4;
 }
 
-.auth-link:hover {
+.authentication-link:hover {
   cursor: pointer;
   text-decoration: none;
 
-  color: #d2d2d2;
+  color: #c1c1c1;
 }
 
-.empty-quote-board {
+.quotivation-board {
   position: relative;
 
-  min-height: 100vh;
-  padding-bottom: 950px;
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  min-height: max-content;
+  margin: 0 auto;
+  padding: 0;
+
+  list-style: none;
 
   background-image: url('/images/bg-images/bg-0.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.empty-quote-board p {
+.empty-quotivation-board {
+  padding: 0 5%;
+}
+
+.quotivation-board-dimmed {
+  padding-bottom: 900px;
+
+  background-image: url('/images/bg-images/bg-00.jpg') !important;
+}
+
+.no-sources-message {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 2.8rem;
   font-weight: bold;
 
   position: absolute;
-  top: 35%;
+  top: 50%;
   left: 50%;
 
   width: 250px;
-  margin-left: -125px;
+  margin: -105.5px 0 0 -125px;
 
   text-align: center;
 
@@ -50,30 +66,21 @@
   border: 5px solid #ffffff;
 }
 
-.singular-quote-board {
-  position: relative;
+.no-sources-message-hidden {
+  display: none;
+}
 
-  min-height: 100vh;
-  padding-bottom: 950px;
+.singular-quotivation-board li {
+  background: 0;
+}
 
-  background-image: url('/images/bg-images/bg-0.jpg');
+.assorted-quotivation-board li {
   background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
 }
 
-.singular-quote-board li {
-  position: absolute;
-  top: 20%;
-
-  padding: 0 10%;
-}
-
-.quote {
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 3%;
-}
-
-.quote-board-item {
+.quotivation-board-item {
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   font-size: 1.4rem;
   font-weight: bold;
@@ -81,153 +88,146 @@
   display: flex;
   flex-direction: column;
 
-  width: 100%;
-  min-height: 324px;
-  padding: 100px 5%;
+  min-height: max-content;
+  padding: 50px 5%;
 
-  color: #ffffff;
+  color: #f4f4f4;
   text-shadow: 2px 2px #333333;
 
+  flex: 1;
   justify-content: center;
 }
-.quote-board {
-  position: relative;
-  width: 100%;
-  margin: 0 auto;
+
+.quotivation-board-loader {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+
+  margin-right: -21px;
+  margin-left: -21px;
 }
+
+.quote {
+  padding: 5%;
+
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.quote-trailer {
+  display: inline-block;
+
+  white-space: nowrap;
+}
+
+.quote-last-word {
+  display: inline-block;
+}
+
+.quote-change-button {
+  display: inline-block;
+
+  vertical-align: middle;
+}
+
+.quote-change-button:hover {
+  cursor: pointer;
+
+  color: #c1c1c1;
+}
+
 .quote-source {
   font-size: 1.4rem;
 
   float: right;
 
-  margin-top: 5%;
+  margin-top: 35px;
 }
-.change-button {
-  display: inline-block;
 
-  height: 30px;
-  margin: 0;
-
-  vertical-align: middle;
-}
-.change-button:hover {
-  cursor: pointer;
-
-  color: #cccccc;
-}
-.background-0 {
+.bg-img-0 {
   background-image: url('/images/bg-images/bg-0.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.background-1 {
+.bg-img-1 {
   background-image: url('/images/bg-images/bg-1.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.background-2 {
+.bg-img-2 {
   background-image: url('/images/bg-images/bg-2.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.background-3 {
+.bg-img-3 {
   background-image: url('/images/bg-images/bg-3.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.background-4 {
+.bg-img-4 {
   background-image: url('/images/bg-images/bg-4.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.background-5 {
+.bg-img-5 {
   background-image: url('/images/bg-images/bg-5.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.background-6 {
+.bg-img-6 {
   background-image: url('/images/bg-images/bg-6.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.background-7 {
+.bg-img-7 {
   background-image: url('/images/bg-images/bg-7.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.background-8 {
+.bg-img-8 {
   background-image: url('/images/bg-images/bg-8.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.background-9 {
+.bg-img-9 {
   background-image: url('/images/bg-images/bg-9.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-/*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
-  .quote-board-item {
+  .quotivation-board-item {
     font-size: 1.8rem;
+
+    padding: 75px 5%;
   }
+
   .quote-source {
     font-size: 2.0rem;
   }
+
   .change-button {
     font-size: 1.5rem;
   }
 }
 
-/*Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
-  .quote-board-item {
+  .quotivation-board-item {
     font-size: 2.0rem;
-
-    min-height: 432px;
   }
+
   .quote-source {
     font-size: 2.2rem;
   }
 }
 
-/*Large devices (desktops, 992px and up)*/
 @media (min-width: 992px) {
-  .quote-board-item {
-    font-size: 3.0rem;
-
-    min-height: 558px;
-
-    text-shadow: 3px 3px #333333;
+  .quotivation-board-item {
+    font-size: 2.3rem;
   }
+
+  .quote {
+    padding: 3%;
+  }
+
   .quote-source {
-    font-size: 2.6rem;
-  }
-  .change-button {
-    font-size: 2.0rem;
-
-    height: 45px;
+    font-size: 2.5rem;
   }
 }
 
-/*Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) {
-  .quote-board-item {
-    font-size: 3.5rem;
-
-    min-height: 675px;
-
-    text-shadow: 4px 4px #333333;
+@media (min-width: 1600px) {
+  .quotivation-board-item {
+    font-size: 2.8rem;
   }
+
   .quote-source {
     font-size: 3.0rem;
   }

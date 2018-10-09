@@ -1,15 +1,16 @@
-/*Extra small devices (portrait phones, less than 576px)*/
 .search-bar {
-  width: 100%;
+  box-sizing: border-box;
   height: 30px;
-  text-align: center;
   padding: 15px 0 45px;
-  background-color: #4747c8;
+
+  text-align: center;
   white-space: nowrap;
-  border-top: 1px solid #000000;
+
   border-bottom: 1px solid #000000;
+  background-color: #365daa;
 }
-.search-input {
+
+.search-bar-input {
   box-sizing: border-box;
   width: 80%;
   height: 30px;
@@ -18,15 +19,18 @@
   vertical-align: top;
 
   border: 1px solid #bbbbbb;
+  border-right: 0;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
-  border-right: 0;
 }
-.search-input:focus {
+
+.search-bar-input:focus {
   outline: none;
 }
-.search-icon-container {
+
+.search-bar-icon-container {
   display: inline-block;
+
   box-sizing: border-box;
   width: 30px;
   height: 30px;
@@ -40,27 +44,14 @@
   background-color: #efedfc;
 }
 
-.search-icon {
+.search-bar-icon {
   max-width: 100%;
 
   vertical-align: top;
 }
 
-/*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
-  .search-input {
+  .search-bar-input {
     width: 150px;
   }
-}
-
-/*Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) {
-}
-
-/*Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) {
-}
-
-/*Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) {
 }

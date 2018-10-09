@@ -1,52 +1,72 @@
 .search-result-list {
-  color: #000000;
   position: absolute;
-  background-color: #f4f4f4;
-  width: 100%;
   z-index: 100;
+
+  width: 100%;
+  padding: 0;
+
+  list-style: none;
+
+  color: #000000;
+  background-color: #f4f4f4;
 }
 
 .search-result-list-item {
+  font-size: 0.9rem;
+  font-weight: bold;
+
   position: relative;
+
   width: 100%;
   padding: 5px 15px;
-  border-bottom: 1px solid #777777;
-  font-weight: bold;
-  font-size: 0.9rem;
+
   color: #222222;
+  border-bottom: 1px solid #777777;
 }
 
 .search-result-list-item:hover {
   cursor: pointer;
+
   background-color: #dddddd;
 }
 
-.search-result-title {
-  display: inline-block;
-  width: 89%;
-}
-
-.add-button {
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  height: 20px;
-  line-height: 20px;
-  margin-top: -10px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #4747c8;
-}
-
-.clear-button {
-  box-sizing: border-box;
-  padding: 0;
-  height: 20px;
-  line-height: 20px;
+.search-result-list-warning {
   text-align: center;
 }
 
-.clear-button img {
+.search-result-author-name {
   display: inline-block;
+
+  width: 89%;
+}
+
+.search-result-add-button {
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 20px;
+
+  position: absolute;
+  top: 50%;
+  right: 5%;
+
+  height: 20px;
+  margin-top: -10px;
+
+  color: #365daa;
+}
+
+.search-result-clear-button {
+  line-height: 20px;
+
+  box-sizing: border-box;
+  height: 20px;
+  padding: 0;
+
+  text-align: center;
+}
+
+.search-result-clear-button img {
+  display: inline-block;
+
   width: 12px;
 }

@@ -1,0 +1,33 @@
+.page-not-found {
+  height: 100%;
+  min-height: 650px;
+
+  text-align: center;
+
+  background-image: url('/images/bg-images/bg-404.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.page-not-found-title {
+  width: 340px;
+  margin: 10px auto;
+  padding: 10px;
+
+  color: #f4f4f4;
+  background-color: rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 2px #333333;
+}
+
+.page-not-found img {
+  border: 1px solid #000000;
+  margin: 150px 0 25px;
+}
+
+.homepage-link {
+  width: 160px;
+  margin: 5px auto;
+  padding: 5px;
+
+  background-color: rgba(0, 0, 0, 0.8);
+}
