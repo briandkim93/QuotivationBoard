@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import './Signup.css';
-import { closeSignup, signup } from '../../../actions/authentication';
+import { closeSignup, toggleLogin, signup } from '../../../actions/authentication';
 
 class Signup extends Component {
   constructor(props) {
@@ -21,6 +21,7 @@ class Signup extends Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleToggleLogin = this.handleToggleLogin.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
@@ -28,6 +29,11 @@ class Signup extends Component {
     this.setState({
       [event.target.id.replace('signup-', '')]: event.target.value
     });
+  }
+
+  handleToggleLogin() {
+    this.props.closeSignup();
+    this.props.toggleLogin();
   }
 
   validate(username, email, password1, password2) {
@@ -283,6 +289,9 @@ class Signup extends Component {
             <div className="text-danger small">
               {this.state.response.position === 4 && this.state.response.message}
             </div>
+            <div>
+              <span className="btn btn-link btn-sm text-primary p-0" onClick={this.handleToggleLogin}>(Already Have An Account?)</span>
+            </div>
             <div className="w-100 overflow-auto mt-2">
               <button className="btn btn-blue float-right" type="submit">Sign Up</button>
             </div>
@@ -325,6 +334,7 @@ function mapPropsToState(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     closeSignup: closeSignup, 
+    toggleLogin: toggleLogin,
     signup: signup
   }, dispatch);
 }
