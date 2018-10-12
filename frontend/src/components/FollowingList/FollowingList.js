@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import './FollowingList.css';
 import { getSources, removeSource } from '../../actions'
@@ -40,7 +41,7 @@ class FollowingList extends Component {
 
   render() {
     return (
-      <ul className="following-list">
+      <ul className={`following-list ${this.props.location.pathname.includes('account') || this.props.location.pathname.includes('reset') || this.props.location.pathname.includes('verify') ? 'account-settings-min-width' : ''}`}>
         <li className="following-list-title">
           Following
         </li>
@@ -69,4 +70,4 @@ function mapStateToDispatch(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapStateToDispatch)(FollowingList);
+export default withRouter(connect(mapStateToProps, mapStateToDispatch)(FollowingList));

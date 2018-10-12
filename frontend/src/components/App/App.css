@@ -11,6 +11,10 @@ body, html {
   height: 100%;
 }
 
+.account-settings-min-width {
+  min-width: 520px;
+}
+
 .bg-dark-grey {
   background-color: #333333;
 }
@@ -110,6 +114,16 @@ body, html {
 
   color: #aaaaaa;
   border-bottom: 1px solid #cccccc;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    background-color: #f4f4f4;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: #888888;
 }
 
 .text-link {

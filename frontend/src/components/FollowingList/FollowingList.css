@@ -1,8 +1,9 @@
 .following-list {
   margin: 0;
   padding: 20px 0;
-  background-color: #222222;
   list-style: none;
+
+  background-color: #222222;
 }
 
 .following-list li {
@@ -11,10 +12,11 @@
 }
 
 .following-list li:last-child {
-  border: 0;
   margin-top: 15px;
   padding-top: 0 !important;
   padding-bottom: 0;
+
+  border: 0;
 }
 
 .following-list-item {
@@ -43,6 +45,7 @@
 
 .following-list-author-name {
   width: 92%;
+  padding-right: 5px;
 }
 
 .following-list-close-button {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import './App.css';
 import Menu from '../Menu/Menu';
@@ -13,7 +14,7 @@ import Main from '../Main/Main';
 class App extends Component {
   render() {
     return (
-      <div className="app">
+      <div className={`app ${this.props.location.pathname.includes('account') || this.props.location.pathname.includes('reset') || this.props.location.pathname.includes('verify') ? 'account-settings-min-width' : ''}`}>
         <Menu />
         <div className="position-relative">
           <Signup />
@@ -29,4 +30,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
