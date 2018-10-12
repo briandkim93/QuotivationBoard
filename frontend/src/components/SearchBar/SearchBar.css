@@ -21,6 +21,8 @@
   border: 1px solid #bbbbbb;
   border-right: 0;
   border-top-left-radius: 15px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
   border-bottom-left-radius: 15px;
 }
 
