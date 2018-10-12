@@ -25,10 +25,11 @@
     z-index: 1000;
     top: 0;
 
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     box-sizing: border-box;
-    width: 220px;
+    width: 230px;
     height: 100%;
 
     border-right: 1px solid #000000;
@@ -37,18 +38,18 @@
   .menu-main {
     position: static;
 
-    min-width: 220px;
+    min-width: 230px;
   }
 
   .side-menu-hidden {
-    margin-left: -220px;
+    margin-left: -230px;
   }
 
   .menu-slider {
     position: fixed;
     z-index: 1000;
     top: 50%;
-    left: 220px;
+    left: 230px;
 
     display: inline-block;
 
