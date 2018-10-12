@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import './SearchBar.css';
-import { getSearchResults } from '../../actions/index';
+import { clearSearchResults, getSearchResults } from '../../actions/index';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -22,10 +22,18 @@ class SearchBar extends Component {
       this.setState({
         displayLoader: false
       });
-      if (!this.props.searchResults.length) {
+      if (this.props.searchResults.length === 0) {
         this.setState({
           query: ''
         });
+      }
+    }
+    if (this.props.displayMenu !== prevProps.displayMenu) {
+      if (!this.props.displayMenu) {
+        this.setState({
+          query: ''
+        });
+        this.props.clearSearchResults();
       }
     }
   } 
@@ -72,12 +80,16 @@ class SearchBar extends Component {
 
 function mapStateToProps(state) {
   return {
+    displayMenu: state.displayMenu,
     searchResults: state.searchResults
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({getSearchResults}, dispatch);
+  return bindActionCreators({
+    clearSearchResults: clearSearchResults,
+    getSearchResults: getSearchResults
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
