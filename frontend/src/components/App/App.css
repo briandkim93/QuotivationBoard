@@ -119,11 +119,17 @@ body, html {
 ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
-    background-color: #f4f4f4;
+    height: 7px;
+    background-color: #333333;
 }
+
 ::-webkit-scrollbar-thumb {
     border-radius: 2px;
     background-color: #888888;
+}
+
+::-webkit-scrollbar-corner {
+  background: #333333;
 }
 
 .text-link {
@@ -136,6 +142,12 @@ body, html {
 
 .text-link-violet:hover {
   color: #43549d;
+}
+
+@media (min-width: 576px) {
+  .account-settings-min-width {
+    min-width: 0;
+  }
 }
 
 @media (min-height: 1000px) {
