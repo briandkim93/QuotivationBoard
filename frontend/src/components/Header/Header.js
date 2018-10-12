@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import './Header.css';
 import { toggleMenu } from '../../actions/index'
@@ -9,7 +10,9 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <img className="header-logo" src='/images/logo.png' alt="QuotivationBoard Logo" />
+        <Link to='/'>
+          <img className="header-logo" src='/images/logo.png' alt="QuotivationBoard Logo" />
+        </Link>
         <div className="header-title">
           <h5>
             QuotivationBoard
