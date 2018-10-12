@@ -139,10 +139,7 @@ class QuotivationBoard extends Component {
 
   render() {
     return (
-      <ul 
-        className={`quotivation-board ${this.getBoardType(this.props.sources)} ${this.props.displaySignup || this.props.displayLogin || this.props.displayPasswordResetRequest ? 'quotivation-board-dimmed' : ''}`}
-        onClick={this.props.closeMenu}
-      >
+      <ul className={`quotivation-board ${this.getBoardType(this.props.sources)} ${this.props.displaySignup || this.props.displayLogin || this.props.displayPasswordResetRequest ? 'quotivation-board-dimmed' : ''}`}>
         {this.props.token
           ? (
             <div className="authentication-bar">
