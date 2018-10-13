@@ -219,9 +219,9 @@ class Signup extends Component {
               <span>&times;</span>
             </button>
           </div>
-          <h3 className="font-weight-light text-center mb-1">
-            Get Started on Your List
-          </h3>
+          <h4 className="font-weight-light text-center mb-1">
+            Get Motivation From Quotes
+          </h4>
           <h6 className="font-weight-light text-center mb-1">
             Create A Free Account Today
           </h6>
