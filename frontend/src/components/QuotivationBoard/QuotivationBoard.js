@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 import './QuotivationBoard.css';
 import { changeQuote, closeMenu } from '../../actions';
-import { toggleSignup, closeSignup, toggleLogin, closeLogin, closePasswordResetRequest, logout } from '../../actions/authentication';
 
 class QuotivationBoard extends Component {
   constructor(props) {
@@ -14,16 +13,8 @@ class QuotivationBoard extends Component {
       displayLoader: false
     };
 
-    this.handleToggleSignup = this.handleToggleSignup.bind(this);
-    this.handleToggleLogin = this.handleToggleLogin.bind(this);
-    this.handleEsc = this.handleEsc.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
     this.renderQuoteBoard = this.renderQuoteBoard.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleEsc, false);
   }
 
   componentDidUpdate(prevProps) {
@@ -44,36 +35,6 @@ class QuotivationBoard extends Component {
         }); 
       }, 1000);
     } 
-  }
-  
-  handleToggleSignup() {
-    this.props.toggleSignup();
-    this.props.closeLogin();
-    this.props.closePasswordResetRequest();
-  }
-
-  handleToggleLogin() {
-    this.props.toggleLogin();
-    this.props.closeSignup();
-    this.props.closePasswordResetRequest();
-  }
-
-  handleEsc(event) {
-    if (event.keyCode === 27) {
-      this.props.closeLogin();
-      this.props.closeSignup();
-      this.props.closePasswordResetRequest();
-      this.props.closeMenu();
-    }
-  }
-
-  handleLogout() {
-    this.props.logout(this.props.token);
-    if (this.props.userInfo.provider === 'facebook' || this.props.userInfo.provider === 'facebook-local') {
-      window.FB.logout(function(response) {
-        return;
-      });
-    }
   }
 
   getBoardType(sources) {
@@ -139,21 +100,7 @@ class QuotivationBoard extends Component {
 
   render() {
     return (
-      <ul className={`quotivation-board ${this.getBoardType(this.props.sources)} ${this.props.displaySignup || this.props.displayLogin || this.props.displayPasswordResetRequest ? 'quotivation-board-dimmed' : ''}`}>
-        {this.props.token
-          ? (
-            <div className="authentication-bar">
-              <span>{this.props.userInfo.provider !== 'facebook' && <Link className="authentication-link" to='/account/settings'>Account</Link>}</span>
-              <span onClick={this.handleLogout}><Link className="authentication-link" to='/'>Logout</Link></span>
-            </div>
-          )
-          : (
-            <div className="authentication-bar">
-              <span className="authentication-link" onClick={this.handleToggleSignup}>Sign Up</span>
-              <span className="authentication-link" onClick={this.handleToggleLogin}>Login</span>
-            </div>
-          )
-        }
+      <ul className={`quotivation-board ${this.getBoardType(this.props.sources)} ${this.props.displaySignup || this.props.displayLogin || this.props.displayPasswordResetRequest ? 'quotivation-board-blurred' : ''}`}>
         {this.state.displayLoader
           ? <div className="loader loader-lg quotivation-board-loader" />
           : this.renderQuoteBoard(this.getBoardType(this.props.sources))
@@ -168,22 +115,15 @@ function mapStateToProps(state) {
     displaySignup: state.displaySignup,
     displayLogin: state.displayLogin,
     displayPasswordResetRequest: state.displayPasswordResetRequest,
+    displayMenu: state.displayMenu,
     sources: state.sources,
     sourcesStatus: state.sourcesStatus,
-    token: state.token,
-    userInfo: state.userInfo
+    token: state.token
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    toggleSignup: toggleSignup,
-    closeSignup: closeSignup,
-    toggleLogin: toggleLogin,
-    closeLogin: closeLogin,
-    closePasswordResetRequest: closePasswordResetRequest,
-    logout: logout,
-    closeMenu: closeMenu,
     changeQuote: changeQuote
   }, dispatch);
 }

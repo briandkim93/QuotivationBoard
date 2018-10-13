@@ -7,13 +7,36 @@ body, html {
   background-color: #333333;
 }
 
-#root, .app, .main {
+#root, .app, .main-container, .main {
   height: 100%;
 }
 
 .account-settings-min-width {
   min-width: 520px;
 }
+
+.authentication-bar {
+  font-size: 1.2rem;
+
+  position: absolute;
+  z-index: 100;
+  top: 75px;
+  right: 0;
+}
+
+.authentication-link {
+  margin-right: 30px;
+
+  color: #f4f4f4;
+}
+
+.authentication-link:hover {
+  cursor: pointer;
+  text-decoration: none;
+
+  color: #c1c1c1;
+}
+
 
 .bg-dark-grey {
   background-color: #333333;
@@ -39,7 +62,7 @@ body, html {
 }
 
 .main-dimmed {
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 .form-control:focus {
@@ -97,10 +120,11 @@ body, html {
 
 .popup-form {
   z-index: 1000000;
-
+  box-sizing: border-box;
   min-width: 450px;
   max-width: 450px;
   margin-top: 150px;
+  border: 3px solid #dddddd;
 }
 
 .popup-form-seperator {
@@ -147,6 +171,10 @@ body, html {
 @media (min-width: 576px) {
   .account-settings-min-width {
     min-width: 0;
+  }
+
+  .authentication-bar {
+    top: 10px;
   }
 }
 
