@@ -7,9 +7,17 @@ import Header from '../Header/Header';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResultList from '../SearchResultList/SearchResultList';
 import FollowingList from '../FollowingList/FollowingList';
-import { toggleMenu } from '../../actions/index';
+import { closeMenu, toggleMenu } from '../../actions/index';
 
 class Menu extends Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.displaySignup !== prevProps.displaySignup || this.props.displayLogin !== prevProps.displayLogin) {
+      if (this.props.displaySignup || this.props.displayLogin) {
+        this.props.closeMenu();
+      }
+    }
+  }
+
   render() {
     return (
       <div>
@@ -39,12 +47,16 @@ class Menu extends Component {
 
 function mapStateToProps(state) {
   return {
+    displaySignup: state.displaySignup,
+    displayLogin: state.displayLogin,
+    displayPasswordResetRequest: state.displayPasswordResetRequest,
     displayMenu: state.displayMenu
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
+    closeMenu: closeMenu,
     toggleMenu: toggleMenu
   }, dispatch);
 }
