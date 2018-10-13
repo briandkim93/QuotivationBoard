@@ -6,6 +6,7 @@
 
   background-image: url('/images/bg-images/bg-404.jpg');
   background-repeat: no-repeat;
+  background-position: 30%;
   background-size: cover;
 }
 
@@ -20,8 +21,9 @@
 }
 
 .page-not-found img {
-  border: 1px solid #000000;
   margin: 150px 0 25px;
+
+  border: 1px solid #000000;
 }
 
 .homepage-link {
