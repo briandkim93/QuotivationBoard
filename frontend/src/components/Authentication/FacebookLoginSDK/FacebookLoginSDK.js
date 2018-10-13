@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { concludeFacebookLoginRender, facebookLogin, } from '../../../actions/authentication';
-import { SOCIAL_AUTH_FACEBOOK_KEY } from '../../../confidential';
+
+require('dotenv').config();
 
 class FacebookLoginSDK extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class FacebookLoginSDK extends Component {
   loadFacebookLoginSDK() {
     window.fbAsyncInit = function() {
       window.FB.init({
-        appId      : SOCIAL_AUTH_FACEBOOK_KEY,
+        appId      : process.env.REACT_APP_SOCIAL_AUTH_FACEBOOK_KEY,
         cookie     : true,
         xfbml      : true,
         version    : 'v3.1'
