@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 import ACTION_TYPES from './types'
-import API_BASE_URL from './apiInfo';
+
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+axios.defaults.xsrfCookieName = 'csrftoken';
 
 export function toggleMenu() {
   return {
