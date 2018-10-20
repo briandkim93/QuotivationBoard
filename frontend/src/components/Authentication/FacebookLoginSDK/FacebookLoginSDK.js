@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import { concludeFacebookLoginRender, facebookLogin, } from '../../../actions/authentication';
 
-require('dotenv').config();
-
 class FacebookLoginSDK extends Component {
   constructor(props) {
     super(props);

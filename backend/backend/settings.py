@@ -139,6 +139,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'sgbackend.SendGridBackend'
+SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 
 DEBUG = True

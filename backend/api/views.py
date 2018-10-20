@@ -1,5 +1,5 @@
 import json
-
+from django.core.mail import send_mail
 from django.contrib.auth.signals import user_logged_in
 from django.core.serializers import serialize
 from django.utils.decorators import method_decorator
