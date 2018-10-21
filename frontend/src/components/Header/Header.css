@@ -4,8 +4,8 @@
   padding: 15px 0;
 
   color: #365daa;
-  background-color: #f4f4f4;
   border-bottom: 2px solid #dddddd;
+  background-color: #f4f4f4;
 }
 
 .header-logo {
@@ -28,6 +28,17 @@
   font-weight: bold;
 
   margin: 0;
+}
+
+.header-info {
+  font-size: 0.8rem;
+  font-style: italic;
+
+  position: absolute;
+  bottom: 0;
+
+  margin-bottom: -1px;
+  margin-left: 10px;
 }
 
 .header-menu-button {

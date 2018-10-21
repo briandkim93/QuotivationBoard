@@ -17,6 +17,9 @@ class Header extends Component {
           <h5>
             QuotivationBoard
           </h5>
+          <div className="header-info">
+            Quotes Refreshed Daily
+          </div>
         </div>
         <div className='header-menu-button' onClick={this.props.toggleMenu}>
           <div />
